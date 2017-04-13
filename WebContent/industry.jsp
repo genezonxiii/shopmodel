@@ -538,6 +538,11 @@ table.accessHide {
 					$('#resultTable').removeClass('accessHide');
 					
 					$('.visualize').remove();
+
+					var top = ($("#chart").height() - $("#resultTable").height()) / 2;
+					$("#chart")
+						.css("padding-top", top + "px")
+						.css("padding-left", "50px");
 				}
 
 			}
