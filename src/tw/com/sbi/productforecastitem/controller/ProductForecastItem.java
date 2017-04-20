@@ -37,7 +37,8 @@ public class ProductForecastItem extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		
-		ProductForecastItemService productForecastItemService = null;
+		ProductForecastItemService productForecastItemService = new ProductForecastItemService();
+		Gson gson = new Gson();
 		
 		String action = request.getParameter("action");
 		
@@ -49,15 +50,17 @@ public class ProductForecastItem extends HttpServlet {
 			logger.debug("group_id:" + group_id);
 			logger.debug("item_kind:" + item_kind);
 			
-			productForecastItemService = new ProductForecastItemService();
 			List<ProductForecastItemBean> productForecastItemList = productForecastItemService.selectByGroupAndKind(group_id, item_kind);
 			
-			List<ProductForecastBean> list = new ArrayList<ProductForecastBean>();
-			Gson gson = new Gson();
 			String jsonStrList = gson.toJson(productForecastItemList);
 			logger.debug("jsonStrList:" + jsonStrList);
 			response.getWriter().write(jsonStrList);
+		} else if ("getType".equals(action)) {
+			List<ProductForecastTypeBean> productForecastTypeList = productForecastItemService.selectType();
 			
+			String jsonStrList = gson.toJson(productForecastTypeList);
+			logger.debug("jsonStrList:" + jsonStrList);
+			response.getWriter().write(jsonStrList);
 		}
 	}
 	
@@ -95,6 +98,55 @@ public class ProductForecastItem extends HttpServlet {
 			this.item_name = item_name;
 		}
 	}
+	
+	@SuppressWarnings("serial")
+	public class ProductForecastTypeBean implements java.io.Serializable {
+
+		private String typeId;
+		private String industryKind;
+		private String productKind;
+		private String kindCode;
+		private String itemKind;
+		private String itemName;
+		
+		public String getTypeId() {
+			return typeId;
+		}
+		public void setTypeId(String typeId) {
+			this.typeId = typeId;
+		}
+		public String getIndustryKind() {
+			return industryKind;
+		}
+		public void setIndustryKind(String industryKind) {
+			this.industryKind = industryKind;
+		}
+		public String getProductKind() {
+			return productKind;
+		}
+		public void setProductKind(String productKind) {
+			this.productKind = productKind;
+		}
+		public String getKindCode() {
+			return kindCode;
+		}
+		public void setKindCode(String kindCode) {
+			this.kindCode = kindCode;
+		}
+		public String getItemKind() {
+			return itemKind;
+		}
+		public void setItemKind(String itemKind) {
+			this.itemKind = itemKind;
+		}
+		public String getItemName() {
+			return itemName;
+		}
+		public void setItemName(String itemName) {
+			this.itemName = itemName;
+		}
+		
+	}
 
 	/*************************** 制定規章方法 ****************************************/
 	interface productForecastItem_interface {
@@ -105,6 +157,8 @@ public class ProductForecastItem extends HttpServlet {
 //		public void deleteDB(String product_id, String user_id);
 		
 		public List<ProductForecastItemBean> selectByGroupAndKind(String group_id, String item_kind);
+		
+		public List<ProductForecastTypeBean> selectType();
 	}
 
 	/*************************** 處理業務邏輯 ****************************************/
@@ -118,7 +172,10 @@ public class ProductForecastItem extends HttpServlet {
 		public List<ProductForecastItemBean> selectByGroupAndKind(String group_id, String item_kind) {
 			return dao.selectByGroupAndKind(group_id, item_kind);
 		}
-	
+		
+		public List<ProductForecastTypeBean> selectType() {
+			return dao.selectType();
+		}
 	}
 
 	/*************************** 操作資料庫 ****************************************/
@@ -130,6 +187,7 @@ public class ProductForecastItem extends HttpServlet {
 
 		// 會使用到的Stored procedure
 		private static final String sp_select_product_forecast_by_group_kind = "call sp_select_product_forecast_by_group_kind(?, ?)";
+		private static final String sp_select_product_forecast_type = "call sp_select_product_forecast_type()";
 				
 		@Override
 		public List<ProductForecastItemBean> selectByGroupAndKind(String group_id, String item_kind) {
@@ -188,5 +246,56 @@ public class ProductForecastItem extends HttpServlet {
 			return list;
 		}
 
+		
+		@Override
+		public List<ProductForecastTypeBean> selectType() {
+			List<ProductForecastTypeBean> list = new ArrayList<ProductForecastTypeBean>();
+			ProductForecastTypeBean productForecastTypeBean = null;
+			
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+
+			try {
+				con = DriverManager.getConnection(dbURL, dbUserName, dbPassword);
+				pstmt = con.prepareStatement(sp_select_product_forecast_type);
+
+				rs = pstmt.executeQuery();
+				while (rs.next()) {
+					productForecastTypeBean = new ProductForecastTypeBean();
+					
+					productForecastTypeBean.setTypeId(rs.getString("type_id"));
+					productForecastTypeBean.setIndustryKind(rs.getString("industry_kind"));
+					productForecastTypeBean.setProductKind(rs.getString("product_kind"));
+					productForecastTypeBean.setKindCode(rs.getString("kind_code"));
+					productForecastTypeBean.setItemKind(rs.getString("item_kind"));
+					productForecastTypeBean.setItemName(rs.getString("item_name"));
+					
+					list.add(productForecastTypeBean); // Store the row in the list
+				}
+				
+			} catch (SQLException se) {
+				// Handle any driver errors
+				logger.error("SQLException:".concat(se.getMessage()));
+			} finally {
+				// Clean up JDBC resources
+				try{
+					if (rs != null) {
+						rs.close();
+					}
+					if (pstmt != null) {
+						pstmt.close();
+					}
+					if (con != null) {
+						con.close();
+					}
+				} catch (SQLException se) {
+					logger.error("SQLException:".concat(se.getMessage()));
+				} catch (Exception e) {
+					logger.error("Exception:".concat(e.getMessage()));
+				}
+			}
+			return list;
+		}
 	}
 }
