@@ -697,6 +697,20 @@
 			
 		});
 		
+		$(".btn_remove_evaluate").on("click", function(e){
+			e.preventDefault();
+			
+			var rows = $("#tbl_wizard>tbody input:checkbox:checked").closest("tr");
+			
+			if (rows.length>0) {
+				var tblWizard = $("#tbl_wizard").DataTable();
+				
+				tblWizard.rows( rows ).remove().draw();
+			} else {
+				warningMsg("提醒", "請選擇一筆資料");
+			}
+		});
+		
 		function genPointTable(){
 			$("#point").DataTable({
 				destroy: true,
@@ -1219,10 +1233,11 @@
 				</form>
 			</div>
 			
-			<div class="input-field-wrap divFormStep2" hidden="true">
+			<div class="search-result-wrap divFormStep2" hidden="true">
 				<div class="form-wrap">
 					<div class="btn-row">
 						<button class="btn btn-exec btn-wide btn_add_evaluate">新增評估產品項目</button>
+						<button class="btn btn-exec btn-wide btn_remove_evaluate">刪除評估產品項目</button>
 					</div>
 					
 					<table id="tbl_wizard" class="result-table">
