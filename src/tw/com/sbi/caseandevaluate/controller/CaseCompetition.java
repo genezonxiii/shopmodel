@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.StringJoiner;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,13 +30,12 @@ import com.google.gson.JsonSyntaxException;
 import tw.com.sbi.vo.CaseCompetitionVO;
 import tw.com.sbi.vo.CaseVO;
 import tw.com.sbi.vo.EvaluateCompetitionVO;
-import tw.com.sbi.vo.EvaluateVO;
 import tw.com.sbi.vo.UserVO;
 
 public class CaseCompetition extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger logger = LogManager.getLogger(Case.class);
+	private static final Logger logger = LogManager.getLogger(CaseCompetition.class);
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -95,6 +95,7 @@ public class CaseCompetition extends HttpServlet {
 				String case_id = null;
 				String group_id = null;
 				String bcircle_id = null;
+				String industry = null;
 				Integer competition_no = null;
 				String competition_name = null;
 				Integer evaluate_no = null;
@@ -105,6 +106,8 @@ public class CaseCompetition extends HttpServlet {
 				try {
 					case_id = caseVO.getCase_id() == null ? null : caseVO.getCase_id();
 					group_id = request.getSession().getAttribute("group_id").toString();
+					industry = request.getParameter("industry") == null ? 
+							"" : request.getParameter("industry");
 					competition_no = request.getParameter("competition_no") == null ? null
 							: Integer.valueOf(request.getParameter("competition_no"));
 					competition_name = request.getParameter("competition_name") == null ? null
@@ -118,7 +121,7 @@ public class CaseCompetition extends HttpServlet {
 					evaluate_1 = request.getParameter("evaluate_1") == null ? null : request.getParameter("evaluate_1");
 
 					result = caseVO.getResult() == null ? null : caseVO.getResult();
-					result = result == null ? null : result.split("/")[0].split(":")[1].trim();
+					result = result == null ? null : result.split(",")[0].trim();
 					bcircle_id = result == null ? null : caseService.getDecisionBcircleIdByName(result);
 
 				} catch (NumberFormatException e) {
@@ -138,6 +141,7 @@ public class CaseCompetition extends HttpServlet {
 				logger.debug("case_id : " + case_id);
 				logger.debug("groupId : " + group_id);
 				logger.debug("bcircle_id : " + bcircle_id);
+				logger.debug("industry : " + industry);
 				logger.debug("competition_no : " + competition_no);
 				logger.debug("competition_name : " + competition_name);
 				logger.debug("evaluate_no : " + evaluate_no);
@@ -146,7 +150,7 @@ public class CaseCompetition extends HttpServlet {
 				logger.debug("evaluate_1 : " + evaluate_1);
 				logger.debug("result : " + result);
 				logger.debug("===========================================================================");
-				String competition_id = caseService.addCaseCompetition(case_id, group_id, bcircle_id, competition_no,
+				String competition_id = caseService.addCaseCompetition(case_id, group_id, bcircle_id, industry, competition_no,
 						competition_name, evaluate_no, evaluate, evaluate_1_no, evaluate_1);
 				logger.debug("competition_id : " + competition_id);
 				logger.debug("===========================================================================");
@@ -284,7 +288,7 @@ public class CaseCompetition extends HttpServlet {
 			return dao.selectEvaluateByCompetitionId(competition_id);
 		}
 
-		public String addCaseCompetition(String case_id, String group_id, String bcircle_id, Integer competition_no,
+		public String addCaseCompetition(String case_id, String group_id, String bcircle_id, String industry, Integer competition_no,
 				String competition_name, Integer evaluate_no, String evaluate, String evaluate_1_no,
 				String evaluate_1) {
 
@@ -293,6 +297,7 @@ public class CaseCompetition extends HttpServlet {
 			competitionVO.setCase_id(case_id);
 			competitionVO.setGroup_id(group_id);
 			competitionVO.setBcircle_id(bcircle_id);
+			competitionVO.setIndustry(industry);
 			competitionVO.setCompetition_no(competition_no);
 			competitionVO.setCompetition_name(competition_name);
 			competitionVO.setEvaluate_no(evaluate_no);
@@ -360,7 +365,7 @@ public class CaseCompetition extends HttpServlet {
 
 		// 會使用到的Stored procedure
 		private static final String sp_get_decision_case_finish = "call sp_get_decision_case_finish()";
-		private static final String sp_insert_case_competition = "call sp_insert_case_competition(?,?,?,?,?,?,?,?,?,?)";
+		private static final String sp_insert_case_competition = "call sp_insert_case_competition(?,?,?,?,?,?,?,?,?,?,?)";
 		private static final String sp_insert_evaluate_competition = "call sp_insert_evaluate_competition(?,?,?,?,?,?,?,?)";
 		private static final String sp_selectall_user = "call sp_selectall_user(?)";
 		private static final String sp_get_decision_BD_by_name = "call sp_get_decision_BD_by_name(?)";
@@ -397,16 +402,21 @@ public class CaseCompetition extends HttpServlet {
 					caseVO.setEvaluate_1(rs.getString("evaluate_1") == null ? "" : rs.getString("evaluate_1"));
 					caseVO.setEnding_time(rs.getString("ending_time") == null ? "" : rs.getString("ending_time"));
 
-					String businessDistrict = rs.getString("result") == null ? ""
-							: (businessDistrict = rs.getString("result").split(";")[0].split(",")[0]);
-					String fraction = rs.getString("result") == null ? ""
-							: (fraction = rs.getString("result").split(";")[0].split(",")[1]);
-					StringBuffer strbuf = new StringBuffer();
-					strbuf = businessDistrict.length() > 0 && fraction.length() > 0
-							? strbuf.append("商圈為: ").append(businessDistrict).append(" / 分數為: ").append(fraction)
-							: null;
-					String result = strbuf == null ? "" : strbuf.toString();
-
+					//優先排序
+					StringJoiner joiner = new StringJoiner(",");
+					if (rs.getString("result") != null && rs.getString("result") != "") {
+						String[] businessDistrictList = rs.getString("result").split(";");
+						for (int i = 0; i < businessDistrictList.length; i++ ) {
+							String tmp = businessDistrictList[i];
+							businessDistrictList[i] = tmp.split(",")[0];
+						}
+						
+						for (String tmp : businessDistrictList) {
+						    joiner.add(tmp.toString());
+						}
+					}
+					String result = joiner == null ? "" : joiner.toString();
+					
 					caseVO.setResult(result);
 					caseVO.setIsfinish(rs.getString("isfinish") == null ? "" : rs.getString("isfinish"));
 					caseVO.setV_city_name(rs.getString("city_name") == null ? "" : rs.getString("city_name"));
@@ -467,11 +477,12 @@ public class CaseCompetition extends HttpServlet {
 				cs.setString(7, null2Str(competitionVO.getEvaluate()));
 				cs.setString(8, null2Str(competitionVO.getEvaluate_1_no()));
 				cs.setString(9, null2Str(competitionVO.getEvaluate_1()));
+				cs.setString(10, null2Str(competitionVO.getIndustry()));
 
-				cs.registerOutParameter(10, Types.VARCHAR);
+				cs.registerOutParameter(11, Types.VARCHAR);
 
 				cs.execute();
-				competition_id = cs.getString(10);
+				competition_id = cs.getString(11);
 
 				return competition_id;
 
@@ -680,15 +691,20 @@ public class CaseCompetition extends HttpServlet {
 					caseCompetitionVO.setEvaluate_1(null2Str(rs.getString("evaluate_1")));
 					caseCompetitionVO.setEnding_time(null2Str(rs.getString("ending_time")));
 					
-					String businessDistrict = rs.getString("result") == null ? ""
-							: (businessDistrict = rs.getString("result").split(";")[0].split(",")[0]);
-					String fraction = rs.getString("result") == null ? ""
-							: (fraction = rs.getString("result").split(";")[0].split(",")[1]);
-					StringBuffer strbuf = new StringBuffer();
-					strbuf = businessDistrict.length() > 0 && fraction.length() > 0
-							? strbuf.append("通路為: ").append(businessDistrict).append(" / 分數為: ").append(fraction)
-							: null;
-					String result = strbuf == null ? "" : strbuf.toString();
+					//優先排序
+					StringJoiner joiner = new StringJoiner(",");
+					if (rs.getString("result") != null && rs.getString("result") != "") {
+						String[] businessDistrictList = rs.getString("result").split(";");
+						for (int i = 0; i < businessDistrictList.length; i++ ) {
+							String tmp = businessDistrictList[i];
+							businessDistrictList[i] = tmp.split(",")[0];
+						}
+						
+						for (String tmp : businessDistrictList) {
+						    joiner.add(tmp.toString());
+						}
+					}
+					String result = joiner == null ? "" : joiner.toString();
 					
 					caseCompetitionVO.setResult(null2Str(result));
 					caseCompetitionVO.setIsfinish(null2Int(rs.getString("isfinish")));

@@ -43,23 +43,15 @@
 		var tbl_evaluation_group_select_arr = [];
 		var choose_count = 0;
 		
-		var competition_count_default = 4;
+		var competition_count_default = 0;
 		var competition_count = 10;
-		var evaluation_count_default = 7;
+		var evaluation_count_default = 0;
 		var evaluation_count = 10;
 		
-		var competition_details_text_arr_default = ["天X喫茶趣", "小X栽堂", "X自點複合式餐飲", "集X人間茶飲"];
-
-		var evaluation_details_select_arr_default = [3, 3, 3, 3, 3, 3, 3];
-		var evaluation_details_text_arr_default = ["主要資源", "主要夥伴", "主要活動", "價值論述力", "市場區隔力", "客戶關係", "商品通路"];
-		var evaluation_show_all_group_default = 
-			[["營業據點", "投資報酬", "固定資產"],
-		    ["通路商", "供應鏈", "研究機構"],
-		    ["行銷", "生產活動", "財務活動"],
-		    ["產品論述", "服務論述", "品牌論述"],
-		    ["區域市場", "全國市場", "海外市場"],
-		    ["關鍵客戶", "客戶見證", "客戶社群"],
-		    ["實體店", "虛擬店", "虛實整合"]];
+		var competition_details_text_arr_default = [];
+		var evaluation_details_select_arr_default = [];
+		var evaluation_details_text_arr_default = [];
+		var evaluation_show_all_group_default = [];
 				
 		$(document).keypress(function(e) {
 			if(e.which == 13) {
@@ -101,7 +93,7 @@
 						'<th style="width:40px;"><label>項次</label></th>' + 
 						'<th><label>國家</label></th>' + 
 						'<th><label>城市</label></th>' + 
-						'<th><label>最高分商圈</label></th>' + 
+						'<th><label>商圈優先排序</label></th>' + 
 					'</tr>'
 				);
 			
@@ -162,6 +154,11 @@
 		
 		$("#btn_step2_next").click(function(e) {
 			e.preventDefault();
+			
+			if ($("#industry").val() == "") {
+				warningMsg('提醒', '請先選擇業種');
+				return;
+			}
 			
 			var count = $('#competitorsNum').val();
 			
@@ -425,6 +422,11 @@
 				
 		$("#btn_step2_default").click(function(e) {
 			e.preventDefault();
+			if ($("#industry").val() == "") {
+				warningMsg('提醒', '請先選擇業種');
+				return;
+			}
+			
 			$('#competitorsNum').val(competition_count_default);
 			choose_count = competition_count_default;
 		});
@@ -530,6 +532,7 @@
 					user_rdo_arr: user_rdo_arr,
 					user_text_arr: user_text_arr,
 					decision_case_finish_json_params : decision_case_finish_json_params,
+					industry: $("#industry").val(),
 					competition_no: $("#competitorsNum").val(),
 					competition_name: competition_name,
 					evaluate_no: $("#evaluationNum").val(),
@@ -565,6 +568,60 @@
 		
 		function mainLoad() {
 			
+			var obj_default = [{"industry": "健康養生產業",
+				"competitor_count": 5,
+				"competitor": ["慈濟靜思堂", "Chi Dynamics International", "智能氣功", "郭林氣功", "白雁健康管理"],
+				"evaluate_count": 3,
+				"evaluate": ["實質成效", "質感追求", "自我實現"],
+				"evaluate_detail_count": [2, 3, 3],
+				"evaluate_detail": [["心靈", "身體"],
+				    ["舒適", "專業", "便捷"],
+				    ["人脈網絡", "群體影響", "追求卓越"]]
+				}, 
+				{"industry": "零售百貨",
+				"competitor_count": 5,
+				"competitor": ["台茂購物城", "廣豐新天地", "三井購物城", "華泰名品城", "大江購物城"],
+				"evaluate_count": 7,
+				"evaluate": ["主要資源", "主要夥伴", "主要活動", "價值論述力", "市場區隔力", "客戶關係", "商品通路"],
+				"evaluate_detail_count": [3, 3, 3, 3, 3, 3, 3],
+				"evaluate_detail": [["營業據點", "投資報酬", "固定資產"],
+				    ["通路商", "供應鏈", "研究機構"],
+				    ["行銷", "生產活動", "財務活動"],
+				    ["產品論述", "服務論述", "品牌論述"],
+				    ["區域市場", "全國市場", "海外市場"],
+				    ["關鍵客戶", "客戶見證", "客戶社群"],
+				    ["實體店", "虛擬店", "虛實整合"]]
+				}, 
+				{"industry": "餐飲"}, 
+				{"industry": "時尚"}, 
+				{"industry": "物流"}];
+			
+			$("#industry>option").remove();
+			$("#industry").append(
+					$("<option/>", {"value": ""})
+						.text(defaultValue)
+				);
+			$.each(obj_default, function(i, item){
+				$("#industry").append(
+					$("<option/>", {"value": item.industry})
+						.text(item.industry)
+				);
+			});
+			
+			$("#industry").on("change", function(){
+				var industry = $(this).val();
+				$.each(obj_default, function(i, item){
+					if (item.industry == industry) {
+						competition_count_default = item.competitor_count; //4
+						competition_details_text_arr_default = item.competitor; //["天X喫茶趣", "小X栽堂", "X自點複合式餐飲", "集X人間茶飲"]
+						evaluation_count_default = item.evaluate_count; //7
+						evaluation_details_text_arr_default = item.evaluate; //["主要資源", "主要夥伴", "主要活動", "價值論述力", "市場區隔力", "客戶關係", "商品通路"]
+						evaluation_details_select_arr_default = item.evaluate_detail_count; //[3, 3, 3, 3, 3, 3, 3]
+						evaluation_show_all_group_default = item.evaluate_detail;
+					}
+				});
+			});
+			
 			setTblMain();
 
 			show_hide([true, false, false, false, false, false, false, false]);
@@ -581,7 +638,7 @@
 						'<th style="width:40px;"><label>項次</label></th>' + 
 						'<th><label>國家</label></th>' + 
 						'<th><label>城市</label></th>' + 
-						'<th><label>最高分通路</label></th>' + 
+						'<th><label>優先排序</label></th>' + 
 						'<th><label>完成時間</label></th>' + 
 						'<th><label>狀態</label></th>' + 
 					'</tr>'
@@ -736,6 +793,12 @@
 							<table class="result-table">
 								<tbody>
 									<tr>
+										<td><label>業種</label></td>
+										<td>
+											<select id="industry" name="industry"></select>
+										</td>
+									</tr>
+									<tr>
 										<td><label>競爭對手</label></td>
 										<td>
 											<select id="competitorsNum" name="competitorsNum"></select>
@@ -760,7 +823,7 @@
 					<div class="search-result-wrap">
 						<div class="form-row">
 							<h2>建立競爭力決策</h2>
-							<h4>2.銷售競爭力類別群組</h4>
+							<h4>2.競爭力類別群組</h4>
 						</div>
 						
 						<div class="result-table-wrap">

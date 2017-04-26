@@ -11,6 +11,7 @@ public class CaseCompetitionVO implements Serializable {
 	private String case_id;
 	private String group_id;
 	private String bcircle_id;
+	private String industry;
 	private Integer competition_no;
 	private String competition_name;
 	private Integer evaluate_no;
@@ -184,6 +185,14 @@ public class CaseCompetitionVO implements Serializable {
 
 	public void setBcircle_bcircle_name(String bcircle_bcircle_name) {
 		this.bcircle_bcircle_name = bcircle_bcircle_name;
+	}
+
+	public String getIndustry() {
+		return industry;
+	}
+
+	public void setIndustry(String industry) {
+		this.industry = industry;
 	}
 
 }
