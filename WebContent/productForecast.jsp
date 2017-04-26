@@ -217,19 +217,19 @@
 								
 								$("#product_name_test").html("產品名稱：" + json_obj[i].product_name);
 								
-								var function_name = json_obj[i].function_name.split(',');
+								var function_name = json_obj[i].function_name == ""? []:json_obj[i].function_name.split(',');
 								
 								$.each( function_name, function( index, value ){
 									$("#function-test").append('<tr><td>' + value + '</td><td>' + '<input type="text" id="function-test-' + index + '" name="function-test-' + index + '">' + '</td></tr>');
 								});
 								
-								var nfunction_name = json_obj[i].nfunction_name.split(',');
+								var nfunction_name = json_obj[i].nfunction_name == ""? []:json_obj[i].nfunction_name.split(',');
 								
 								$.each( nfunction_name, function( index, value ){
 									$("#nfunction-test").append('<tr><td>' + value + '</td><td>' + '<input type="text" id="nfunction-test-' + index + '" name="nfunction-test-' + index + '">' + '</td></tr>');
 								});
 								
-								var service_name = json_obj[i].service_name.split(',');
+								var service_name = json_obj[i].service_name == ""? []:json_obj[i].service_name.split(',');
 								
 								$.each( service_name, function( index, value ){
 									$("#service-test").append('<tr><td>' + value + '</td><td>' + '<input type="text" id="service-test-' + index + '" name="service-test-' + index + '">' + '</td></tr>');
@@ -812,13 +812,11 @@
 			var h_str_checkbox = "", str_checkbox = "", str_button = "";
 			
 			if ('<%=role%>' == '0') {
-				$('#btn_create').hide();
-				$('#btn_main_view').hide();
+				$('#divMain button').hide();
 				$('#btn_evaluate').show();
 				h_str_checkbox = '<th><label>選擇</label></th>';
 			} else if ('<%=role%>' == '1') {
-				$('#btn_create').show();
-				$('#btn_main_view').show();
+				$('#divMain button').show();
 				$('#btn_evaluate').hide();
 				h_str_checkbox = '<th><label>選擇</label></th>';
 			}
@@ -911,6 +909,9 @@
 												'</tr>');
 										
 										$.each( result_list, function(index, value){
+											if (value == '$0.0%') {
+												return true;
+											}
 											var temp = value.split("$");
 											$("#tblResult").append('<tr><td>' + index + '</td><td><label>' + temp[0] + '</label><td><label>' + temp[1] + '</td></td></tr>');
 										});

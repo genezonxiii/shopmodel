@@ -59,13 +59,19 @@ public class ProductForecast extends HttpServlet {
 				String supply_name = request.getParameter("supply_name");
 				BigDecimal function_no = new BigDecimal( request.getParameter("function_no") );
 				String function_name = request.getParameter("function_name");
-				String function_score = request.getParameter("function_score");
+				String function_score = request.getParameter("function_score") == null 
+						|| request.getParameter("function_score") == ""? 
+						"0":request.getParameter("function_score");
 				BigDecimal nfunction_no = new BigDecimal( request.getParameter("nfunction_no") );
 				String nfunction_name = request.getParameter("nfunction_name");
-				String nfunction_score = request.getParameter("nfunction_score");
+				String nfunction_score = request.getParameter("nfunction_score") == null 
+						|| request.getParameter("nfunction_score") == ""? 
+						"0":request.getParameter("nfunction_score");
 				BigDecimal service_no = new BigDecimal( request.getParameter("service_no") );
 				String service_name = request.getParameter("service_name");
-				String service_score = request.getParameter("service_score");
+				String service_score = request.getParameter("service_score") == null 
+						|| request.getParameter("service_score") == ""? 
+						"0":request.getParameter("service_score");
 				String ref_prod = request.getParameter("ref_prod");
 				
 //				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

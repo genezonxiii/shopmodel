@@ -148,9 +148,9 @@
 						var nfunction_point_arr = [];
 						var service_point_arr = [];
 						
-						function_name_arr = item.v_function_name.split(',');
-						nfunction_name_arr = item.v_nfunction_name.split(',');
-						service_name_arr = item.v_service_name.split(',');
+						function_name_arr = item.v_function_name == ""? []:item.v_function_name.split(',');
+						nfunction_name_arr = item.v_nfunction_name == ""? []:item.v_nfunction_name.split(',');
+						service_name_arr = item.v_service_name == ""? []:item.v_service_name.split(',');
 						
 						function_point_arr = item.function_point.split(',');
 						nfunction_point_arr = item.nfunction_point.split(',');

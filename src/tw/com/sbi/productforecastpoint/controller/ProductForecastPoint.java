@@ -92,9 +92,15 @@ public class ProductForecastPoint extends HttpServlet {
 				/*************************** 1.接收請求參數 **************************************/
 				String forecast_id = request.getParameter("forecast_id");
 				String user_id = request.getParameter("user_id");
-				String function_point = request.getParameter("function_point");
-				String nfunction_point = request.getParameter("nfunction_point");
-				String service_point = request.getParameter("service_point");
+				String function_point = request.getParameter("function_point") == null 
+						|| request.getParameter("function_point") == ""? 
+						"0":request.getParameter("function_point");
+				String nfunction_point = request.getParameter("nfunction_point") == null 
+						|| request.getParameter("nfunction_point") == ""? 
+						"0":request.getParameter("nfunction_point");
+				String service_point = request.getParameter("service_point") == null 
+						|| request.getParameter("service_point") == ""? 
+						"0":request.getParameter("service_point");
 				
 				logger.debug("forecast_id:" + forecast_id);
 				logger.debug("user_id:" + user_id);
