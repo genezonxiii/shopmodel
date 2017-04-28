@@ -61,7 +61,6 @@
 			columns : [ 
 				{"data": "city", "defaultContent": ""},
 				{"data": "description", "defaultContent": ""},
-				{"data": null, "defaultContent": ""},
 				{"data": null, "defaultContent": ""}
 			],
 			columnDefs: [{
@@ -246,7 +245,6 @@
 							<th>縣市資料</th>
 							<th>資料內容</th>
 							<th>更新資料庫</th>
-							<th>下載資料</th>
 						</tr>
 					</thead>
 				</table>
