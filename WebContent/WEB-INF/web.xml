@@ -83,6 +83,11 @@
 <!-- 	<param-value>co_news</param-value> -->
     <param-value>co_eatapple</param-value>
   </context-param>
+  <context-param>
+    <param-name>marketingStrategyImgPath</param-name>
+    <param-value>http://61.218.8.55/SBI/marketingStrategy/img/</param-value>
+  </context-param>
+
   <servlet>
     <servlet-name>login</servlet-name>
     <servlet-class>tw.com.sbi.login.controller.Login</servlet-class>
