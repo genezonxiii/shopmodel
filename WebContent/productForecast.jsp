@@ -281,9 +281,6 @@
 		                       	}, '請輸入數值介於1~5，小數點後1位!' );
 
 								$(".content-wrap > div").hide();
-// 								$("#divMain").hide();
-// 								$("#div1").hide();
-// 								$("#div3").hide();
 								$("#divTest").show();
 							});
 							
@@ -362,9 +359,6 @@
 			
 			$(".content-wrap > div").hide();
 			$("#divMain").show();
-// 		    $("#div1").hide();
-// 			$("#div3").hide();
-// 			$("#divTest").hide();
 		});
 		
 		$("#addRow").click(function() {
@@ -627,14 +621,7 @@
 						.append($('<option/>').val(item).html(item));
 				});
 		    } );
-			
-			$("[name=tbl_type]").on("click", "input.chktype", function(e) {
-			    //single check
-				$('input.chktype')
-			    	.not(this)
-			    	.prop('checked', false);  
-			});
-			
+						
 			$("select[name=cbx_kind]").on("change", function(e) {
 				var table = $('[name=tbl_type]').DataTable();
 				
@@ -650,34 +637,37 @@
 					text : "確認",
 					click : function() {
 						var chk = false;
-						var data = null;
+						var dataList = [];
 						
 						$('[name=tbl_type]>tbody').find('tr').each(function (i, item) {
 							var row = $(this);
 
 							if ( row.find('input[type="checkbox"]').is(':checked') ) {
-								data = $("[name=tbl_type]").DataTable().row(this).data();
+								var data = $("[name=tbl_type]").DataTable().row(this).data();
+								dataList.push(data);
 							    chk = true;
 							}
 						});
 						
 						if (!chk) {
-							warningMsg("提醒", "請選擇一筆資料");
+							warningMsg("提醒", "請選擇至少一筆資料");
 							return;
 						}
 						
 						//新增資料列
 						var tblWizard = $("#tbl_wizard").DataTable();
 						
-						tblWizard.row
-							.add({
-								kind_code: data.kindCode, 
-								item_kind: data.itemKind, 
-								item_name: data.itemName, 
-								portion: 10
-							})
-							.draw();
+						$.each(dataList, function(i, item){
+							tblWizard.row
+								.add({
+									kind_code: item.kindCode, 
+									item_kind: item.itemKind, 
+									item_name: item.itemName, 
+									portion: 10
+								});
+						})
 						
+						tblWizard.draw();
 						
 						$("#tbl_wizard").on("blur", "input[name=portion]", function(e){
 							e.preventDefault();
@@ -707,8 +697,37 @@
 				
 				tblWizard.rows( rows ).remove().draw();
 			} else {
-				warningMsg("提醒", "請選擇一筆資料");
+				warningMsg("提醒", "請選擇至少一筆資料");
 			}
+		});
+		
+		//selectAll
+		$("#dialog-type").on("click", "button.btn-selectAll", function(e) {
+			e.preventDefault();
+			
+			var div = $("#dialog-type");
+			var table = div.find(".result-table").DataTable();
+			table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+				var data = this.data();
+				var node = this.node();
+				
+				var chktype = $(node).find(".chktype");
+				chktype.prop("checked", !chktype.prop("checked"));
+			});
+		});
+		
+		$(".divFormStep2").on("click", "button.btn-selectAll", function(e) {
+			e.preventDefault();
+			
+			var div = $(".divFormStep2");
+			var table = div.find(".result-table").DataTable();
+			table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+				var data = this.data();
+				var node = this.node();
+				
+				var chktype = $(node).find(".chkdetail");
+				chktype.prop("checked", !chktype.prop("checked"));
+			});
 		});
 		
 		function genPointTable(){
@@ -870,9 +889,6 @@
 					
 					$(".content-wrap > div").hide();
 					$("#divMain").show();
-// 					$("#div1").hide();
-// 					$("#div3").hide();
-// 					$("#divTest").hide();
 					
 					$('#main td').click(function () {
 						var $this = $(this);
@@ -1244,7 +1260,11 @@
 					<table id="tbl_wizard" class="result-table">
 						<thead>
 							<tr>
-								<th>勾選</th>
+								<th>
+									<div style='display:inline'>
+										<button class='btn btn-darkblue btn-selectAll'>全選</button>
+									</div>
+								</th>
 								<th>項目類別</th>
 								<th>項目名稱</th>
 								<th>成本比例</th>
@@ -1273,7 +1293,11 @@
 			<table name="tbl_type" class='result-table'>
 				<thead>
 					<tr>
-						<th>勾選</th>
+						<th>
+							<div style='display:inline'>
+								<button class='btn btn-darkblue btn-selectAll'>全選</button>
+							</div>
+						</th>
 						<th>產業類別</th>
 						<th>產品類別</th>
 						<th>項目類別</th>
