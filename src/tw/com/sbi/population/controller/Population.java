@@ -13,14 +13,12 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Population extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-//	private static final Logger logger = LogManager.getLogger(Population.class);
+	private static final Logger logger = LogManager.getLogger(Population.class);
 	
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
@@ -36,9 +34,10 @@ public class Population extends HttpServlet {
     	String type = request.getParameter("type");
     	String urls = request.getParameter("url");  
 
-//    	logger.info("kind:" + kind);
-//    	logger.info("type:" + type);
-//    	logger.info("urls" + urls);
+    	logger.info("kind:" + kind);
+    	logger.info("type:" + type);
+    	logger.info("urls:" + urls);
+    	
     	String encodeKind = new String(Base64.encodeBase64String(kind.getBytes()));
     	String encodeType = new String(Base64.encodeBase64String(type.getBytes()));
     	String encodeUrl = new String(Base64.encodeBase64String(urls.getBytes()));
