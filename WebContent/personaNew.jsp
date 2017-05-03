@@ -279,21 +279,19 @@ function checkboxcheck(name){
 		$("#simu").click(function(e){
 			e.preventDefault();
 			
-			$('#product').val('特調紅茶');
-			
-			$("#view input[name^=sex][value='1']").each(function() {
-				$(this).prop( "checked", true );
-		    });
-			
-			$("#view input[name^=age][value='1']").each(function() {
-				$(this).prop( "checked", true );
+			$('#product').val('健康養生');
+
+			$("#view input[name=country][value='4'], [name=sex][value='1'], [name=age][value='1'], [name=age][value='2']").each(function() {
+				$(this).attr( "checked", true );
 		    });
 			
 			$("#view input[name^=px][value='3']").each(function() {
 				$(this).attr( "checked", true );
 		    });
 			
-			$("#view input[name=px4][value='2'],[name=px5][value='2'],[name=px7][value='2']").each(function() {
+			$("#view input[name=px1][value='6']").prop( "checked", true );
+			
+			$("#view input[name=px4][value='2'], [name=px5][value='2'], [name=px7][value='2']").each(function() {
 				$(this).attr( "checked", true );
 		    });
 		});
