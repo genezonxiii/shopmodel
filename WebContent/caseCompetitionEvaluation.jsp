@@ -28,7 +28,7 @@
 <script>
 	
 	$(function() {
-		var div_list = ['div_main','div_evaluate_step1','div_evaluate_step2','div_evaluate_step3'];
+		var div_list = ['div_list','div_main','div_evaluate_step1','div_evaluate_step2','div_evaluate_step3'];
 		var user_count = 0;
 		var competition_name_arr_count = 0;
 		var level1_count = 0;
@@ -59,6 +59,50 @@
 				}
 			}
 		}
+		
+		
+		$("#btn_list_view").click(function(e){
+			e.preventDefault();
+
+			var competition_id = "";
+			var auth = "";
+			$('#tbl_list>tbody').find('tr').each(function () {
+				var row = $(this);
+				console.log(row);
+				if ( row.find('input[type="checkbox"]').is(':checked') ) {
+					console.log("checked");
+					console.log(row.data("evaluate"));
+					
+					var evaluate = row.data("evaluate");
+					if (evaluate) {
+						auth = evaluate.user_authority;
+					} else {
+						auth = "";
+					}
+					
+					competition_id = row.find('[id^=competition_id_]').val();
+				}
+			});
+			
+			if (competition_id){
+				console.log(auth);
+				if (auth == "1" || auth == "2" || "1" == '<%=role%>'){
+					window.open('caseCompetitionUserDetail.jsp?competition_id=' + competition_id, '', 'width=700,height=500,directories=no,location=no,menubar=no,scrollbars=yes,status=no,toolbar=no,resizable=no,left=250,top=150,screenX=0,screenY=0');					
+				} else {
+					warningMsg('提醒', '請確認您的權限');
+				}
+			} else {
+				warningMsg('提醒', '請選擇一筆資料');
+			}
+		});
+		
+		$("#btn_list_evaluate").click(function(e) {
+			e.preventDefault();
+			
+			getCaseNotFinish();
+
+			show_hide([false, true, false, false, false]);
+		});
 		
 		$("#btn_main_evaluate").click(function(e) {
 			e.preventDefault();
@@ -91,7 +135,7 @@
 				  	required: true
 				});
 		   	});
-			show_hide([false, true, false, false]);
+			show_hide([false, false, true, false, false]);
 		});
 		
 		$("#btn_step1_default").click(function(e) {
@@ -178,7 +222,7 @@
 				});
 		   	});
 			
-			show_hide([false, false, true, false]);
+			show_hide([false, false, false, true, false]);
 		});
 		
 		$("#btn_step2_prev").click(function(e) {
@@ -195,7 +239,7 @@
 				$('*[class^="div_evaluate_step2_"]').hide();
 				$('.div_evaluate_step2_' + step2_index).show();
 			} else {
-				show_hide([false, true, false, false]);  
+				show_hide([false, false, true, false, false]);  
 			}
 		});
 		
@@ -281,7 +325,7 @@
 					});
 			   	});
 				
-				show_hide([false, false, false, true]);  
+				show_hide([false, false, false, false, true]);  
 			}
 		});
 		
@@ -313,7 +357,7 @@
 		$("#btn_step3_reset").click(function(e) {
 			e.preventDefault();
 
-			show_hide([true, false, false, false]);
+			show_hide([false, true, false, false, false]);
 		});
 		
 		$( document ).ready(function() {
@@ -321,11 +365,103 @@
 		});
 		
 		function mainLoad() {
-			
-			getCaseNotFinish();
+			setTblList();
 
-			show_hide([true, false, false, false]);
+			show_hide([true, false, false, false, false]);
 		}
+		
+		
+		function setTblList() {
+			$("#tbl_list").find('tbody').remove();
+			$("#tbl_list").append('<tbody></tbody>');
+
+			$("#tbl_list").html(
+					'<tr>' + 
+						'<th style="width:40px;"><label>選取</label></th>' +
+						'<th style="width:40px;"><label>項次</label></th>' + 
+						'<th><label>國家</label></th>' + 
+						'<th><label>城市</label></th>' + 
+						'<th><label>優先排序</label></th>' + 
+						'<th><label>完成時間</label></th>' + 
+						'<th><label>狀態</label></th>' + 
+					'</tr>'
+				);
+			
+			$.ajax({
+				type : "POST",
+				url : "caseCompetition.do",
+				data : {
+					action : "getCase"
+				},
+				success : function(result) {
+					var json_obj = $.parseJSON(result);
+					
+					$.each(json_obj, function(i, item) {
+
+						country = item.v_country;
+						city = item.v_city_name;
+						
+						var finish = ""
+						if (item.isfinish == '1') {
+							finish = '完成';
+						} else {
+							finish = '<span style="color:red;">決策中</span>';
+						}
+						
+						$("#tbl_list").append('<tr>' + 
+								'<td><input type="checkbox"  name="tbl_main_checkbox" id="checkbox-r' + i + '"/><label for="checkbox-r' + i + '"></label></td>' + 
+								'<td>' + (i + 1) + '</td>' + 
+								'<td>' + item.country_country_name + '</td>' + 
+								'<td>' + item.city_city_name + '</td>' + 
+								'<td>' + item.result + '</td>' + 
+								'<td>' + item.ending_time + '</td>' + 
+								'<td>' + finish + 
+									'<input type="hidden" id="city_id_' + i + '" value="' + item.city_id + '">' + 
+									'<input type="hidden" id="competition_id_' + i + '" value="' + item.competition_id + '">' + 
+								'</td>' + 
+								'</tr>');
+						
+
+						//取得權限
+						$.ajax({
+							type : "POST",
+							url : "caseCompetition.do",
+							data : {
+								action : "getEvaluate",
+								competition_id : item.competition_id
+							},
+							success : function(result) {
+								var evaluate_obj = $.parseJSON(result);
+								console.log("getEvaluate:" + item.case_id);
+								console.log('<%=user_id%>');
+								console.log(evaluate_obj);
+								$.each(evaluate_obj, function(j, evaluate_item) {
+									if (evaluate_item.user_id == '<%=user_id%>'){
+										$("#tbl_list>tbody").find("tr:eq(" + (i+1) + ")").data("evaluate", evaluate_item);
+									}
+								});
+							}
+						});
+						
+						
+						$("#tbl_list").find("tr:eq(" + i + ")").data("case", item);
+						
+					})
+					
+					$('[id^=checkbox-r]').click(function(e) {
+						$("[id^=checkbox-r]").prop( "checked", false );
+						$(this).prop( "checked", true );
+					});
+					
+					$('#tbl_list').find('tr').each(function () {
+						var row = $(this);
+						var city_id = row.find('[id^=city_id_]').val();
+						
+					});
+				}
+			});			
+		}
+
 		
 		function getCaseNotFinish() {
 			$.ajax({
@@ -489,7 +625,29 @@
 		<div class="content-wrap">
 			<div id="caseAlert"></div>
 			<div id="resultModal" class="result-table-wrap"></div>
-		
+
+			<div id="div_list" class="form-row" >
+				<form class="form-row customDivMain">
+					<div class="search-result-wrap">
+						<div class="form-row">
+							<h2>競爭力決策評估</h2>
+						</div>
+						
+						<div class="result-table-wrap">
+							<table id="tbl_list" class="result-table">
+								<tbody></tbody>
+							</table>
+						</div>
+						
+						<div class="btn-row">
+							<button id="btn_list_evaluate" class="btn btn-exec btn-wide" >開始競爭力決策</button>
+							<button id="btn_list_view" class="btn btn-exec btn-wide" >查看競爭力決策</button>
+						</div>
+					</div>
+				</form>
+			</div>
+
+
 			<div id="div_main" class="form-row" >
 				<form class="form-row customDivMain">
 					<div class="search-result-wrap">

@@ -549,7 +549,7 @@
 		$("#btn_main_view").click(function(e){
 			e.preventDefault();
 			if($("input:checkbox[name='tbl_main_checkbox']:checked").length === 0){
-				warningMsg('警告', '查看通路決策時，請勾選一筆決策 !');
+				warningMsg('警告', '查看競爭力決策時，請勾選一筆決策 !');
 				return;
 			}
 						

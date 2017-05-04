@@ -208,7 +208,10 @@
 				success : function(result) {
 					var json_obj = $.parseJSON(result);
 					console.log(json_obj);
-					
+
+					var findUser = false;
+					var auth = 0;
+
 					user_count = json_obj.length;
 
 					$.each(json_obj, function(i, item) {
@@ -219,7 +222,31 @@
 								'<td>' + content[json_obj[i].user_authority - 1] + '</td>' +
 								'<td><button name="' + json_obj[i].competition_id + '" value="'+ json_obj[i].user_id + '" class="btn-chkevaluate btn btn-wide btn-primary">查看評估內容</button></td>' + 
 								'</tr>');
+						
+
+						if (item.user_id == '<%=user_id%>'){
+							console.log("authority:" + item.user_authority);
+							
+							findUser = true;
+							auth = item.user_authority;
+						}
 					});
+					
+					if ('1' != '<%=role%>') {
+						if (findUser) {
+							if (auth != 1) {
+								$('#tbl_user button')
+									.prop('disabled', true)
+									.removeClass("btn-primary")
+									.addClass("btn-gray");
+							}
+						} else {
+							$('#tbl_user button')
+								.prop('disabled', true)
+								.removeClass("btn-primary")
+								.addClass("btn-gray");
+						}					
+					}
 					
 					$(".btn-chkevaluate").click(function(e){
 						e.preventDefault();
