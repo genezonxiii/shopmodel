@@ -608,6 +608,7 @@ table.accessHide {
 				action : "getChart",
 				city : city_list,
 				variable_name : variable_name_list,
+				subItem: $("#subitem").val(),
 				year : $("#year").val()
 			},
 			success : function(result) {

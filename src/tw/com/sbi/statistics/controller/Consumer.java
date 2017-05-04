@@ -205,10 +205,17 @@ public class Consumer extends HttpServlet {
 				String city = request.getParameter("city");
 				String variableName = request.getParameter("variable_name");
 				String year = request.getParameter("year");
+				String subItem = request.getParameter("subItem");
+				
+				logger.debug("city:".concat(city));
+				logger.debug("variableName:".concat(variableName));
+				logger.debug("year:".concat(year));
+				logger.debug("subItem:".concat(subItem));
 				
 				ConsumerVO paramVO = new ConsumerVO();
 				paramVO.setCity(city);
 				paramVO.setVariableName(variableName);
+				paramVO.setSubItem(subItem);
 				paramVO.setYear(year);
 				
 				consumerService = new ConsumerService();
@@ -299,7 +306,7 @@ public class Consumer extends HttpServlet {
 		private static final String sp_consumer_SubItemVariableName = "call sp_consumer_SubItemVariableName(?,?,?,?,?)";
 		private static final String sp_consumer_VariableName = "call sp_consumer_VariableName(?,?,?,?)";
 		private static final String sp_consumer_Year = "call sp_consumer_Year(?,?)";
-		private static final String sp_consumer_Chart = "call sp_consumer_Chart(?,?,?)";
+		private static final String sp_consumer_Chart = "call sp_consumer_Chart(?,?,?,?)";
 		
 		@Override
 		public List<ConsumerVO> selectCity() {
@@ -769,7 +776,8 @@ public class Consumer extends HttpServlet {
 				pstmt = con.prepareStatement(sp_consumer_Chart);
 				pstmt.setString(1, paramVO.getCity());
 				pstmt.setString(2, paramVO.getVariableName());
-				pstmt.setString(3, paramVO.getYear());
+				pstmt.setString(3, paramVO.getSubItem());
+				pstmt.setString(4, paramVO.getYear());
 				rs = pstmt.executeQuery();
 				
 				while (rs.next()) {
