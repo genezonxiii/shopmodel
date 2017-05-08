@@ -633,6 +633,7 @@
 			
 			$("#dialog-type").dialog({
 				modal : true,
+				width: 850,
 				buttons : [{
 					text : "確認",
 					click : function() {
