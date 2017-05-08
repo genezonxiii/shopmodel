@@ -281,7 +281,7 @@ function checkboxcheck(name){
 			
 			$('#product').val('健康養生');
 
-			$("#view input[name=country][value='4'], [name=sex][value='1'], [name=age][value='1'], [name=age][value='2']").each(function() {
+			$("#view input[name=country][value='4'], [name=sex][value='1'], [name=age][value='2'], [name=age][value='3']").each(function() {
 				$(this).attr( "checked", true );
 		    });
 			
