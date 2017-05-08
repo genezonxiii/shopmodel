@@ -225,21 +225,37 @@ function checkboxcheck(name){
 		$("#simu").click(function(e){
 			e.preventDefault();
 			
-			$('#product').val('健康養生');
-
-			$("#view input[name=country][value='4'], [name=sex][value='1'], [name=age][value='1'], [name=age][value='2']").each(function() {
-				$(this).attr( "checked", true );
-		    });
+			var defValue = {
+				text: {
+					product: '健康養生'
+				},
+				radio: {
+					country: [4],
+					sex: [1],
+					age: [2,3],
+					px1: [6],
+					px2: [3],
+					px3: [3],
+					px4: [2],
+					px5: [2],
+					px6: [3],
+					px7: [2],
+					px8: [3],
+					px9: [3]
+				}
+			};
 			
-			$("#view input[name^=px][value='3']").each(function() {
-				$(this).attr( "checked", true );
-		    });
-			
-			$("#view input[name=px1][value='6']").prop( "checked", true );
-			
-			$("#view input[name=px4][value='2'], [name=px5][value='2'], [name=px7][value='2']").each(function() {
-				$(this).attr( "checked", true );
-		    });
+			$.each(defValue, function(element, object){
+				$.each(object, function(key, value){
+					if (element == "radio") {
+						$.each(value, function(i, attrValue){
+							$("#view input[name=" + key + "][value=" + attrValue + "]").attr( "checked", true );
+						});
+					} else if (element == "text") {
+						$("#" + key).val(value);
+					}
+				});
+			});
 		});
 	});
 </script>
