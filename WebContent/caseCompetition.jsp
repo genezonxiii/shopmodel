@@ -566,6 +566,24 @@
 
 		});
 		
+		
+		$("#tbl_evaluation_final").on("change", "[name^=tbl_evaluation_final_text]", function(e) {
+			e.preventDefault();
+			
+			var radioUser = $(this).closest("tr").find("[name^=user]");
+			
+			if ($(this).val() == "0") {
+				radioUser
+					.prop('checked', false)
+					.rules("remove");
+			} else {
+				radioUser.rules("add", {
+				  	required: true
+				});
+			}
+		});
+
+		
 		function mainLoad() {
 			
 			var obj_default = [{"industry": "健康養生產業",

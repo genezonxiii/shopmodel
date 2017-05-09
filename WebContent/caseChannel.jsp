@@ -371,10 +371,7 @@
 						
 						$("[name^=tbl_evaluation_final_text_]").each(function(){
 							$(this).rules("add", {
-								required: true,
-								digits: true,
-			                    max: 5,
-			                    min: 1
+								required: true
 							});
 					   	});
 					});
@@ -593,6 +590,23 @@
 			window.open('caseChannelUserDetail.jsp?channel_id=' + channel_id, '', 'width=700,height=500,directories=no,location=no,menubar=no,scrollbars=yes,status=no,toolbar=no,resizable=no,left=250,top=150,screenX=0,screenY=0');
 
 		});
+		
+		$("#tbl_evaluation_final").on("change", "[name^=tbl_evaluation_final_text]", function(e) {
+			e.preventDefault();
+			
+			var radioUser = $(this).closest("tr").find("[name^=user]");
+			
+			if ($(this).val() == "0") {
+				radioUser
+					.prop('checked', false)
+					.rules("remove");
+			} else {
+				radioUser.rules("add", {
+				  	required: true
+				});
+			}
+		});
+
 		
 		function mainLoad() {
 			

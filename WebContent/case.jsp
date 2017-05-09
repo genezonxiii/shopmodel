@@ -540,6 +540,22 @@
 			});
 		});
 		
+		$("#tbl_level4").on("change", "[name^=eval_3_text]", function(e) {
+			e.preventDefault();
+			
+			var radioUser = $(this).closest("tr").find("[name^=user]");
+			
+			if ($(this).val() == "0") {
+				radioUser
+					.prop('checked', false)
+					.rules("remove");
+			} else {
+				radioUser.rules("add", {
+				  	required: true
+				});
+			}
+		});
+		
 		function mainLoad() {
 			
 			setTblMain();

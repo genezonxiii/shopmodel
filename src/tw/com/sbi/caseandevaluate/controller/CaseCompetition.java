@@ -157,7 +157,7 @@ public class CaseCompetition extends HttpServlet {
 
 				int loopCount = 0;
 
-				if (user_rdo_arr.length == user_text_arr.length) {
+				//if (user_rdo_arr.length == user_text_arr.length) {
 					Set<String> userIdSet = new HashSet<String>();
 
 					HashMap<String, String> authorityMap = new HashMap<String, String>();
@@ -203,7 +203,7 @@ public class CaseCompetition extends HttpServlet {
 						}
 						logger.debug("===========================================================================");
 					}
-				}
+				//}
 			}
 		} else if ("getCase".equals(action)) {
 			try {
@@ -522,7 +522,7 @@ public class CaseCompetition extends HttpServlet {
 				cs.setString(2, null2Str(evaluateCompetitionVO.getUser_id()));
 				cs.setString(3, null2Str(evaluateCompetitionVO.getEvaluate_reason()));
 				cs.setString(4, null2Str(evaluateCompetitionVO.getWeight()));
-				cs.setString(5, null2Str(evaluateCompetitionVO.getUser_authority()));
+				cs.setString(5, evaluateCompetitionVO.getUser_authority());
 				cs.setString(6, null2Str(evaluateCompetitionVO.getEvaluate_point()));
 				cs.setString(7, null2Str(evaluateCompetitionVO.getEvaluate_1_point()));
 				cs.setString(8, null2Str(evaluateCompetitionVO.getEvaluate_seq()));

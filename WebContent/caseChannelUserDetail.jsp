@@ -217,11 +217,12 @@
 
 					$.each(json_obj, function(i, item) {
 						var content = ['可', '不可'];
+						var privilege = content[item.user_authority - 1] == undefined? "無":content[item.user_authority - 1];
 						
 						$("#tbl_user").append('<tr><td><label>' + json_obj[i].user_name + '</label></td>' + 
-								'<td>' + (json_obj[i].weight * 20) + '%</td>' +
-								'<td>' + content[json_obj[i].user_authority - 1] + '</td>' +
-								'<td><button name="' + json_obj[i].channel_id + '" value="'+ json_obj[i].user_id + '" class="btn-chkevaluate btn btn-wide btn-primary">查看評估內容</button></td>' + 
+								'<td>' + (item.weight * 20) + '%</td>' +
+								'<td>' + privilege + '</td>' +
+								'<td><button name="' + item.channel_id + '" value="'+ item.user_id + '" class="btn-chkevaluate btn btn-wide btn-primary">查看評估內容</button></td>' + 
 								'</tr>');
 						
 
