@@ -114,6 +114,18 @@
 				case "i":
 					kind = "pop_index";
 					break;
+				case "pa":
+					kind = "pop_index_a";
+					break;
+				case "pd":
+					kind = "pop_index_d";
+					break;
+				case "pe":
+					kind = "pop_index_e";
+					break;
+				case "pf":
+					kind = "pop_five";
+					break;
 		    };
 		    
 	    	$.ajax({

@@ -177,182 +177,6 @@
 		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBAA621E921CCAA2C59B8468D8E9726F6F71F479EBD1A8F092D8BBECC4B34231B0</url>
 	</ROW>
 	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>新北市</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B34A4BD546BD98169DDF74E9E925806DB7CD8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>臺北市</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B343EC2490B4BC27DD1F74E9E925806DB7CD8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>桃園市</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B3498450F1BD67D4B02F74E9E925806DB7CD8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>臺中市</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B345BB2F8B8A1BC0667F74E9E925806DB7CD8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>臺南市</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B345C075678FCE6CFB3F74E9E925806DB7CD8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>高雄市</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B34DC17510EEACC9371F74E9E925806DB7CD8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>宜蘭縣</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B34E4BD6BD69354D4F302DBAFC3AA67551AD8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>新竹縣</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B34E4BD6BD69354D4F37BABE5A2B035F632D8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>苗栗縣</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B34E4BD6BD69354D4F3B3F50B8F7A26BC4FD8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>彰化縣</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B34E4BD6BD69354D4F371F479EBD1A8F092D8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>南投縣</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B34E4BD6BD69354D4F338683B55ACF9C526D8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>雲林縣</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B34E4BD6BD69354D4F32ED8E655064FC348D8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>嘉義縣</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B34E4BD6BD69354D4F39FCE5FC322E6E899D8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>屏東縣</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B34E4BD6BD69354D4F376040AB4C5AF04A8D8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>臺東縣</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B34E4BD6BD69354D4F341DA03395C03F9FAD8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>花蓮縣</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B34E4BD6BD69354D4F37F3EBA7587914FF3D8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>澎湖縣</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B34E4BD6BD69354D4F3A5F948415CECE92AD8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>基隆市</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B34E4BD6BD69354D4F3699FE03026989671D8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>新竹市</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B34E4BD6BD69354D4F33C270B8191D0C5E9D8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>嘉義市</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B34E4BD6BD69354D4F3EA09C6570D6B90B5D8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>金門縣</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B349B8468D8E9726F6FEA09C6570D6B90B5D8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
-		<data_kind>i</data_kind>
-		<date>105年12月</date>
-		<city>連江縣</city>
-		<description>統計區人口指標</description>
-		<data_type>JSON</data_type>
-		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBF39826592B0B2B349B8468D8E9726F6F71F479EBD1A8F092D8BBECC4B34231B0</url>
-	</ROW>
-	<ROW>
 		<data_kind>k</data_kind>
 		<date>105年12月</date>
 		<city>新北市</city>
@@ -530,7 +354,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>新北市</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -538,7 +362,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>臺北市</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -546,7 +370,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>桃園市</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -554,7 +378,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>臺中市</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -562,7 +386,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>臺南市</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -570,7 +394,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>高雄市</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -578,7 +402,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>宜蘭縣</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -586,7 +410,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>新竹縣</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -594,7 +418,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>苗栗縣</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -602,7 +426,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>彰化縣</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -610,7 +434,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>南投縣</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -618,7 +442,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>雲林縣</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -626,7 +450,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>嘉義縣</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -634,7 +458,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>屏東縣</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -642,7 +466,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>臺東縣</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -650,7 +474,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>花蓮縣</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -658,7 +482,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>澎湖縣</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -666,7 +490,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>基隆市</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -674,7 +498,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>新竹市</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -682,7 +506,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>嘉義市</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -690,7 +514,7 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>金門縣</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
@@ -698,10 +522,42 @@
 	</ROW>
 	<ROW>
 		<data_kind>l</data_kind>
-		<date>104年12月</date>
+		<date>105年12月</date>
 		<city>連江縣</city>
 		<description>統計區15歲以上人口性別與婚姻狀況統計</description>
 		<data_type>JSON</data_type>
 		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetStatSTDataForOpenCode?oCode=6E03CA29B955A854D8F52522E38D8C7051A1FBEE829C41DBC09B9B1454506F405BFC8E6AA1034831417218D4C8282395C93C1F4155955501</url>
+	</ROW>
+	<ROW>
+		<data_kind>pa</data_kind>
+		<date>105年12月</date>
+		<city>全國</city>
+		<description>行政區人口指標_村里</description>
+		<data_type>JSON</data_type>
+		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetAdminSTDataForOpenCode?oCode=ECC48479C0B91632E91C5874DF23C60E51A1FBEE829C41DB309864665027587E2539094FCB65D41BDDE79C332EB9258D</url>
+	</ROW>
+	<ROW>
+		<data_kind>pd</data_kind>
+		<date>105年12月</date>
+		<city>全國</city>
+		<description>行政區15歲以上人口五歲年齡組婚姻狀況統計_村里</description>
+		<data_type>JSON</data_type>
+		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetAdminSTDataForOpenCode?oCode=ECC48479C0B91632E91C5874DF23C60E51A1FBEE829C41DBC09B9B1454506F40B9422055B5A47ABBD5421BC7960893AF</url>
+	</ROW>
+	<ROW>
+		<data_kind>pe</data_kind>
+		<date>105年12月</date>
+		<city>全國</city>
+		<description>行政區15歲以上人口教育程度統計_村里</description>
+		<data_type>JSON</data_type>
+		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetAdminSTDataForOpenCode?oCode=ECC48479C0B91632E91C5874DF23C60E51A1FBEE829C41DBFCC17E8034AB503F212AB7B0B0B2E8CAD5421BC7960893AF</url>
+	</ROW>
+	<ROW>
+		<data_kind>pf</data_kind>
+		<date>105年12月</date>
+		<city>全國</city>
+		<description>行政區五歲年齡組性別人口統計_村里</description>
+		<data_type>JSON</data_type>
+		<url>http://segisws.moi.gov.tw/STATWSSTData/OpenService.asmx/GetAdminSTDataForOpenCode?oCode=ECC48479C0B91632E91C5874DF23C60E51A1FBEE829C41DB0FE22FA2B97D4FF92539094FCB65D41BDDE79C332EB9258D</url>
 	</ROW>
 </ROWSET>

@@ -43,7 +43,8 @@ public class Population extends HttpServlet {
     	String encodeUrl = new String(Base64.encodeBase64String(urls.getBytes()));
 
     	String url = wsPath + "/OpenData/kind=" + encodeKind + "&type=" + encodeType + "&urls=" + encodeUrl;
-
+    	
+    	logger.debug("ws url:".concat(url));
     	HttpGet httpRequest = new HttpGet(url);
     	HttpClient client = HttpClientBuilder.create().build();
     	HttpResponse httpResponse;
@@ -52,20 +53,18 @@ public class Population extends HttpServlet {
 			int responseCode = httpResponse.getStatusLine().getStatusCode();
 
 	    	if(responseCode==200){
-    	    	response.getWriter().write("成功更新資料庫");
-	    	}
-	    	else {
-	    		response.getWriter().write("更新資料庫失敗"); 
+	    		logger.debug("更新資料庫 - 成功");
+    	    	response.getWriter().write("更新資料庫 - 成功");
+	    	} else {
+	    		logger.debug("更新資料庫 - 失敗");
+	    		response.getWriter().write("更新資料庫 - 失敗"); 
 	    	}	    	
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("ClientProtocolException:".concat(e.getMessage()));
 		} catch (UnsupportedOperationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("UnsupportedOperationException:".concat(e.getMessage()));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("IOException:".concat(e.getMessage()));
 		}
 	}
 }
