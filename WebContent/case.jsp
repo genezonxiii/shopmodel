@@ -457,8 +457,11 @@
 				}
 			});
 
-			window.open('caseUserDetail.jsp?case_id=' + case_id, '', 'width=700,height=500,directories=no,location=no,menubar=no,scrollbars=yes,status=no,toolbar=no,resizable=no,left=250,top=150,screenX=0,screenY=0');
-
+			if (case_id) {
+				window.open('caseUserDetail.jsp?case_id=' + case_id, '', 'width=700,height=500,directories=no,location=no,menubar=no,scrollbars=yes,status=no,toolbar=no,resizable=no,left=250,top=150,screenX=0,screenY=0');
+			} else {
+				warningMsg('提醒', '請選擇一筆資料');
+			}
 		});
 		
 		$("#country").change(function(){
