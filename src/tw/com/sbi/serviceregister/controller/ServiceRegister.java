@@ -39,15 +39,16 @@ public class ServiceRegister extends HttpServlet {
 		Connection con = null;
 		CallableStatement cs = null;
 		ResultSet rs = null;
-		if("insert_reg".equals(request.getParameter("action"))){
+		
+		String action = request.getParameter("action");
+		logger.debug("Action:".concat(action));
+		if("insert_reg".equals(action)){
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 				con = DriverManager.getConnection(dbURL, dbUserName, dbPassword);
 				
-				
-				Class.forName("com.mysql.jdbc.Driver");
-				con = DriverManager.getConnection(dbURL, dbUserName, dbPassword);
 				cs = con.prepareCall("call sp_insert_service_register(?,?,?,?,?,?,?,?)");
+				
 				cs.setString(1, request.getParameter("service_id"));
 				cs.setString(2, request.getParameter("product_id"));
 				cs.setString(3, request.getParameter("cust_name"));

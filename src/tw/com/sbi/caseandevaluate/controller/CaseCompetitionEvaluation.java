@@ -45,19 +45,19 @@ public class CaseCompetitionEvaluation extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 
 		EvaluateService evaluateService = null;
+		
+		String groupId = request.getSession().getAttribute("group_id").toString();
+		logger.debug("group_id:" + groupId);
 
 		String action = request.getParameter("action");
-		logger.info("===========================================================================");
 		logger.info("Action: " + action);
-		logger.info("===========================================================================");
-
+		
 		if ("getCaseCompetitionNotFinish".equals(action)) {
 			evaluateService = new EvaluateService();
-			List<CaseCompetitionVO> list = evaluateService.selectCaseCompetitionNotFinish();
+			List<CaseCompetitionVO> list = evaluateService.selectCaseCompetitionNotFinish(groupId);
 			Gson gson = new Gson();
 			String jsonStrList = gson.toJson(list);
 			logger.info("getCaseCompetitionNotFinish json params : " + jsonStrList);
-			logger.info("===========================================================================");
 			response.getWriter().write(jsonStrList);
 			return;
 		} else if ("update".equals(action)) {
@@ -97,8 +97,8 @@ public class CaseCompetitionEvaluation extends HttpServlet {
 			dao = new EvaluateDAO();
 		}
 
-		public List<CaseCompetitionVO> selectCaseCompetitionNotFinish() {
-			return dao.selectCaseCompetitionNotFinish();
+		public List<CaseCompetitionVO> selectCaseCompetitionNotFinish(String groupId) {
+			return dao.selectCaseCompetitionNotFinish(groupId);
 		}
 
 		public void updateEvaluateCompetition(String competition_id, String user_id, String evaluate_point,
@@ -114,7 +114,7 @@ public class CaseCompetitionEvaluation extends HttpServlet {
 
 	/*************************** 制定規章方法 ****************************************/
 	interface evaluate_interface {
-		public List<CaseCompetitionVO> selectCaseCompetitionNotFinish();
+		public List<CaseCompetitionVO> selectCaseCompetitionNotFinish(String groupId);
 
 		public void updateEvaluateCompetition(String competition_id, String user_id, String evaluate_point,
 				String evaluate_reason, String evaluate_1_point, String evaluate_seq);
@@ -130,12 +130,12 @@ public class CaseCompetitionEvaluation extends HttpServlet {
 		private final String dbPassword = getServletConfig().getServletContext().getInitParameter("dbPassword");
 
 		// 會使用到的Stored procedure
-		private static final String sp_get_decision_case_competition_notfinish = "call sp_get_decision_case_competition_notfinish()";
+		private static final String sp_get_decision_case_competition_notfinish = "call sp_get_decision_case_competition_notfinish(?)";
 		private static final String sp_update_evaluate_competition = "call sp_update_evaluate_competition(?,?,?,?,?,?)";
 		private static final String sp_count_evaluate = "call sp_count_evaluate(?)";
 
 		@Override
-		public List<CaseCompetitionVO> selectCaseCompetitionNotFinish() {
+		public List<CaseCompetitionVO> selectCaseCompetitionNotFinish(String groupId) {
 			List<CaseCompetitionVO> list = new ArrayList<CaseCompetitionVO>();
 			CaseCompetitionVO caseCompetitionVO = null;
 
@@ -147,6 +147,8 @@ public class CaseCompetitionEvaluation extends HttpServlet {
 				Class.forName("com.mysql.jdbc.Driver");
 				con = DriverManager.getConnection(dbURL, dbUserName, dbPassword);
 				pstmt = con.prepareStatement(sp_get_decision_case_competition_notfinish);
+				pstmt.setString(1, groupId);
+				
 				rs = pstmt.executeQuery();
 
 				while (rs.next()) {

@@ -31,7 +31,7 @@ import tw.com.sbi.vo.CaseChannelVO;
 public class CaseChannelEvaluation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger logger = LogManager.getLogger(Evaluate.class);
+	private static final Logger logger = LogManager.getLogger(CaseChannelEvaluation.class);
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -43,21 +43,21 @@ public class CaseChannelEvaluation extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
+		
+		String groupId = request.getSession().getAttribute("group_id").toString();
+		logger.debug("group_id:" + groupId);
 
 		EvaluateService evaluateService = null;
 
 		String action = request.getParameter("action");
-		logger.info("===========================================================================");
 		logger.info("Action: " + action);
-		logger.info("===========================================================================");
-
+		
 		if ("getCaseChannelNotFinish".equals(action)) {
 			evaluateService = new EvaluateService();
-			List<CaseChannelVO> list = evaluateService.selectCaseChannelNotFinish();
+			List<CaseChannelVO> list = evaluateService.selectCaseChannelNotFinish(groupId);
 			Gson gson = new Gson();
 			String jsonStrList = gson.toJson(list);
 			logger.info("getCaseChannelNotFinish json params : " + jsonStrList);
-			logger.info("===========================================================================");
 			response.getWriter().write(jsonStrList);
 			return;
 		} else if ("update".equals(action)) {
@@ -97,8 +97,8 @@ public class CaseChannelEvaluation extends HttpServlet {
 			dao = new EvaluateDAO();
 		}
 
-		public List<CaseChannelVO> selectCaseChannelNotFinish() {
-			return dao.selectCaseChannelNotFinish();
+		public List<CaseChannelVO> selectCaseChannelNotFinish(String groupId) {
+			return dao.selectCaseChannelNotFinish(groupId);
 		}
 
 		public void updateEvaluateChannel(String channel_id, String user_id, String evaluate_point,
@@ -114,7 +114,7 @@ public class CaseChannelEvaluation extends HttpServlet {
 
 	/*************************** 制定規章方法 ****************************************/
 	interface evaluate_interface {
-		public List<CaseChannelVO> selectCaseChannelNotFinish();
+		public List<CaseChannelVO> selectCaseChannelNotFinish(String groupId);
 
 		public void updateEvaluateChannel(String channel_id, String user_id, String evaluate_point,
 				String evaluate_reason, String evaluate_1_point, String evaluate_seq);
@@ -130,12 +130,12 @@ public class CaseChannelEvaluation extends HttpServlet {
 		private final String dbPassword = getServletConfig().getServletContext().getInitParameter("dbPassword");
 
 		// 會使用到的Stored procedure
-		private static final String sp_get_decision_case_channel_notfinish = "call sp_get_decision_case_channel_notfinish()";
+		private static final String sp_get_decision_case_channel_notfinish = "call sp_get_decision_case_channel_notfinish(?)";
 		private static final String sp_update_evaluate_channel = "call sp_update_evaluate_channel(?,?,?,?,?,?)";
 		private static final String sp_count_evaluate = "call sp_count_evaluate(?)";
 
 		@Override
-		public List<CaseChannelVO> selectCaseChannelNotFinish() {
+		public List<CaseChannelVO> selectCaseChannelNotFinish(String groupId) {
 			List<CaseChannelVO> list = new ArrayList<CaseChannelVO>();
 			CaseChannelVO caseChannelVO = null;
 
@@ -147,6 +147,7 @@ public class CaseChannelEvaluation extends HttpServlet {
 				Class.forName("com.mysql.jdbc.Driver");
 				con = DriverManager.getConnection(dbURL, dbUserName, dbPassword);
 				pstmt = con.prepareStatement(sp_get_decision_case_channel_notfinish);
+				pstmt.setString(1, groupId);
 				rs = pstmt.executeQuery();
 
 				while (rs.next()) {

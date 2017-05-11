@@ -35,7 +35,7 @@ import tw.com.sbi.vo.UserVO;
 public class CaseChannel extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger logger = LogManager.getLogger(Case.class);
+	private static final Logger logger = LogManager.getLogger(CaseChannel.class);
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -47,17 +47,19 @@ public class CaseChannel extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
+		
+		String groupId = request.getSession().getAttribute("group_id").toString();
+		logger.debug("group_id:" + groupId);
 
 		CaseService caseService = null;
 
 		String action = request.getParameter("action");
-		logger.debug("===========================================================================");
 		logger.debug("Action: " + action);
-		logger.debug("===========================================================================");
+		
 		if ("getDecisionCaseFinish".equals(action)) {
 			try {
 				caseService = new CaseService();
-				List<CaseVO> list = caseService.selectCaseFinish();
+				List<CaseVO> list = caseService.selectCaseFinish(groupId);
 				String jsonStrList = new Gson().toJson(list);
 				response.getWriter().write(jsonStrList);
 				return;
@@ -204,7 +206,7 @@ public class CaseChannel extends HttpServlet {
 		} else if ("getCase".equals(action)) {
 			try {
 				caseService = new CaseService();
-				List<CaseChannelVO> list = caseService.selectCase();
+				List<CaseChannelVO> list = caseService.selectCase(groupId);
 				String jsonStrList = new Gson().toJson(list);
 				logger.debug(jsonStrList);
 				response.getWriter().write(jsonStrList);
@@ -261,16 +263,16 @@ public class CaseChannel extends HttpServlet {
 			dao = new CaseDAO();
 		}
 
-		public List<CaseChannelVO> selectCase() {
-			return dao.selectCase();
+		public List<CaseChannelVO> selectCase(String groupId) {
+			return dao.selectCase(groupId);
 		}
 
 		public List<CaseChannelVO> selectCaseById(String channel_id) {
 			return dao.selectCaseByChannelId(channel_id);
 		}
 
-		public List<CaseVO> selectCaseFinish() {
-			return dao.selectCaseFinish();
+		public List<CaseVO> selectCaseFinish(String groupId) {
+			return dao.selectCaseFinish(groupId);
 		}
 
 		public List<UserVO> getSearchAllDB(String group_id) {
@@ -329,7 +331,7 @@ public class CaseChannel extends HttpServlet {
 
 	/*************************** 制定規章方法 ****************************************/
 	interface case_interface {
-		public List<CaseVO> selectCaseFinish();
+		public List<CaseVO> selectCaseFinish(String groupId);
 
 		public String insertCasechannel(CaseChannelVO channelVO);
 
@@ -341,7 +343,7 @@ public class CaseChannel extends HttpServlet {
 
 		public List<EvaluateChannelVO> selectEvaluateDetailByChannelId(String channel_id, String user_id);
 
-		public List<CaseChannelVO> selectCase();
+		public List<CaseChannelVO> selectCase(String groupId);
 
 		public List<CaseChannelVO> selectCaseByChannelId(String channel_id);
 
@@ -356,18 +358,18 @@ public class CaseChannel extends HttpServlet {
 		private final String dbPassword = getServletConfig().getServletContext().getInitParameter("dbPassword");
 
 		// 會使用到的Stored procedure
-		private static final String sp_get_decision_case_finish = "call sp_get_decision_case_finish()";
+		private static final String sp_get_decision_case_finish = "call sp_get_decision_case_finish(?)";
 		private static final String sp_insert_case_channel = "call sp_insert_case_channel(?,?,?,?,?,?,?,?,?,?)";
 		private static final String sp_insert_evaluate_channel = "call sp_insert_evaluate_channel(?,?,?,?,?,?,?,?)";
 		private static final String sp_selectall_user = "call sp_selectall_user(?)";
 		private static final String sp_get_decision_BD_by_name = "call sp_get_decision_BD_by_name(?)";
 		private static final String sp_get_decision_evaluate_channel_detail_by_channel_id = "call sp_get_decision_evaluate_channel_detail_by_channel_id(?,?)";
-		private static final String sp_get_decision_case_channel = "call sp_get_decision_case_channel()";
+		private static final String sp_get_decision_case_channel = "call sp_get_decision_case_channel(?)";
 		private static final String sp_get_decision_case_channel_by_channel_id = "call sp_get_decision_case_channel_by_channel_id(?)";
 		private static final String sp_get_decision_evaluate_channel_by_channel_id = "call sp_get_decision_evaluate_channel_by_channel_id(?)";
 
 		@Override
-		public List<CaseVO> selectCaseFinish() {
+		public List<CaseVO> selectCaseFinish(String groupId) {
 			List<CaseVO> list = new ArrayList<CaseVO>();
 			CaseVO caseVO = null;
 
@@ -379,6 +381,8 @@ public class CaseChannel extends HttpServlet {
 				Class.forName("com.mysql.jdbc.Driver");
 				con = DriverManager.getConnection(dbURL, dbUserName, dbPassword);
 				pstmt = con.prepareStatement(sp_get_decision_case_finish);
+				pstmt.setString(1, groupId);
+				
 				rs = pstmt.executeQuery();
 
 				while (rs.next()) {
@@ -713,7 +717,7 @@ public class CaseChannel extends HttpServlet {
 		}
 
 		@Override
-		public List<CaseChannelVO> selectCase() {
+		public List<CaseChannelVO> selectCase(String groupId) {
 			List<CaseChannelVO> list = new ArrayList<CaseChannelVO>();
 			CaseChannelVO caseChannelVO = null;
 
@@ -725,6 +729,8 @@ public class CaseChannel extends HttpServlet {
 				Class.forName("com.mysql.jdbc.Driver");
 				con = DriverManager.getConnection(dbURL, dbUserName, dbPassword);
 				pstmt = con.prepareStatement(sp_get_decision_case_channel);
+				pstmt.setString(1, groupId);
+				
 				rs = pstmt.executeQuery();
 
 				while (rs.next()) {

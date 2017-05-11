@@ -47,17 +47,18 @@ public class CaseCompetition extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-
+		
+		String groupId = request.getSession().getAttribute("group_id").toString();
+		logger.debug("group_id:" + groupId);
+		
 		CaseService caseService = null;
 
 		String action = request.getParameter("action");
-		logger.debug("===========================================================================");
 		logger.debug("Action: " + action);
-		logger.debug("===========================================================================");
 		if ("getDecisionCaseFinish".equals(action)) {
 			try {
 				caseService = new CaseService();
-				List<CaseVO> list = caseService.selectCaseFinish();
+				List<CaseVO> list = caseService.selectCaseFinish(groupId);
 				String jsonStrList = new Gson().toJson(list);
 				response.getWriter().write(jsonStrList);
 				return;
@@ -208,7 +209,7 @@ public class CaseCompetition extends HttpServlet {
 		} else if ("getCase".equals(action)) {
 			try {
 				caseService = new CaseService();
-				List<CaseCompetitionVO> list = caseService.selectCase();
+				List<CaseCompetitionVO> list = caseService.selectCase(groupId);
 				String jsonStrList = new Gson().toJson(list);
 				response.getWriter().write(jsonStrList);
 				return;
@@ -264,8 +265,8 @@ public class CaseCompetition extends HttpServlet {
 			dao = new CaseDAO();
 		}
 
-		public List<CaseVO> selectCaseFinish() {
-			return dao.selectCaseFinish();
+		public List<CaseVO> selectCaseFinish(String groupId) {
+			return dao.selectCaseFinish(groupId);
 		}
 
 		public List<UserVO> getSearchAllDB(String group_id) {
@@ -276,8 +277,8 @@ public class CaseCompetition extends HttpServlet {
 			return dao.getDecisionBcircleIdByName(bcircle_name);
 		}
 
-		public List<CaseCompetitionVO> selectCase() {
-			return dao.selectCase();
+		public List<CaseCompetitionVO> selectCase(String groupId) {
+			return dao.selectCase(groupId);
 		}
 
 		public List<CaseCompetitionVO> selectCaseById(String competition_id) {
@@ -334,7 +335,7 @@ public class CaseCompetition extends HttpServlet {
 
 	/*************************** 制定規章方法 ****************************************/
 	interface case_interface {
-		public List<CaseVO> selectCaseFinish();
+		public List<CaseVO> selectCaseFinish(String groupId);
 
 		public String insertCaseCompetition(CaseCompetitionVO competitionVO);
 
@@ -344,7 +345,7 @@ public class CaseCompetition extends HttpServlet {
 
 		public String getDecisionBcircleIdByName(String bcircle_name);
 
-		public List<CaseCompetitionVO> selectCase();
+		public List<CaseCompetitionVO> selectCase(String groupId);
 
 		public List<CaseCompetitionVO> selectCaseByCompetitionId(String competition_id);
 
@@ -364,18 +365,18 @@ public class CaseCompetition extends HttpServlet {
 		// getServletConfig().getServletContext().getInitParameter("pythonwebservice");
 
 		// 會使用到的Stored procedure
-		private static final String sp_get_decision_case_finish = "call sp_get_decision_case_finish()";
+		private static final String sp_get_decision_case_finish = "call sp_get_decision_case_finish(?)";
 		private static final String sp_insert_case_competition = "call sp_insert_case_competition(?,?,?,?,?,?,?,?,?,?,?)";
 		private static final String sp_insert_evaluate_competition = "call sp_insert_evaluate_competition(?,?,?,?,?,?,?,?)";
 		private static final String sp_selectall_user = "call sp_selectall_user(?)";
 		private static final String sp_get_decision_BD_by_name = "call sp_get_decision_BD_by_name(?)";
-		private static final String sp_get_decision_case_competition = "call sp_get_decision_case_competition()";
+		private static final String sp_get_decision_case_competition = "call sp_get_decision_case_competition(?)";
 		private static final String sp_get_decision_case_competition_by_competition_id = "call sp_get_decision_case_competition_by_competition_id(?)";
 		private static final String sp_get_decision_evaluate_competition_by_competition_id = "call sp_get_decision_evaluate_competition_by_competition_id(?)";
 		private static final String sp_get_decision_evaluate_competition_detail_by_competition_id = "call sp_get_decision_evaluate_competition_detail_by_competition_id(?,?)";
 
 		@Override
-		public List<CaseVO> selectCaseFinish() {
+		public List<CaseVO> selectCaseFinish(String groupId) {
 			List<CaseVO> list = new ArrayList<CaseVO>();
 			CaseVO caseVO = null;
 
@@ -387,6 +388,8 @@ public class CaseCompetition extends HttpServlet {
 				Class.forName("com.mysql.jdbc.Driver");
 				con = DriverManager.getConnection(dbURL, dbUserName, dbPassword);
 				pstmt = con.prepareStatement(sp_get_decision_case_finish);
+				pstmt.setString(1, groupId);
+				
 				rs = pstmt.executeQuery();
 
 				while (rs.next()) {
@@ -662,7 +665,7 @@ public class CaseCompetition extends HttpServlet {
 		}
 
 		@Override
-		public List<CaseCompetitionVO> selectCase() {
+		public List<CaseCompetitionVO> selectCase(String groupId) {
 			List<CaseCompetitionVO> list = new ArrayList<CaseCompetitionVO>();
 			CaseCompetitionVO caseCompetitionVO = null;
 
@@ -674,6 +677,8 @@ public class CaseCompetition extends HttpServlet {
 				Class.forName("com.mysql.jdbc.Driver");
 				con = DriverManager.getConnection(dbURL, dbUserName, dbPassword);
 				pstmt = con.prepareStatement(sp_get_decision_case_competition);
+				pstmt.setString(1, groupId);
+				
 				rs = pstmt.executeQuery();
 
 				while (rs.next()) {

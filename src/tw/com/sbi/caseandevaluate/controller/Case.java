@@ -79,7 +79,7 @@ public class Case extends HttpServlet {
 		} else if ("getCaseNotFinish".equals(action)) {
 			try {								
 				caseService = new CaseService();
-				List<CaseVO> list = caseService.selectCaseNotFinish();
+				List<CaseVO> list = caseService.selectCaseNotFinish(groupId);
 				
 				Gson gson = new Gson();
 				String jsonStrList = gson.toJson(list);
@@ -186,8 +186,8 @@ public class Case extends HttpServlet {
 			return dao.selectCaseByCaseId(caseId);
 		}
 
-		public List<CaseVO> selectCaseNotFinish() {
-			return dao.selectCaseNotFinish();
+		public List<CaseVO> selectCaseNotFinish(String groupId) {
+			return dao.selectCaseNotFinish(groupId);
 		}
 
 		public List<CaseVO> selectCountry() {
@@ -228,7 +228,7 @@ public class Case extends HttpServlet {
 	interface case_interface {
 		public List<CaseVO> selectCase(String groupId);
 		public List<CaseVO> selectCaseByCaseId(String caseId);
-		public List<CaseVO> selectCaseNotFinish();
+		public List<CaseVO> selectCaseNotFinish(String groupId);
 		public List<CaseVO> selectCountry();
 		public List<CaseVO> selectCity(String country);
 		public List<CaseVO> selectBD(String city);
@@ -247,7 +247,7 @@ public class Case extends HttpServlet {
 		// 會使用到的Stored procedure
 		private static final String sp_get_decision_case = "call sp_get_decision_case(?)";
 		private static final String sp_get_decision_case_by_case_id = "call sp_get_decision_case_by_case_id(?)";
-		private static final String sp_get_decision_case_notfinish = "call sp_get_decision_case_notfinish()";
+		private static final String sp_get_decision_case_notfinish = "call sp_get_decision_case_notfinish(?)";
 		private static final String sp_get_decision_country = "call sp_get_decision_country()";
 		private static final String sp_get_decision_city = "call sp_get_decision_city(?)";
 		private static final String sp_get_decision_BD = "call sp_get_decision_BD(?)";
@@ -397,7 +397,7 @@ public class Case extends HttpServlet {
 		}
 		
 		@Override
-		public List<CaseVO> selectCaseNotFinish() {
+		public List<CaseVO> selectCaseNotFinish(String groupId) {
 			List<CaseVO> list = new ArrayList<CaseVO>();
 			CaseVO caseVO = null;
 			
@@ -409,6 +409,8 @@ public class Case extends HttpServlet {
 				Class.forName("com.mysql.jdbc.Driver");
 				con = DriverManager.getConnection(dbURL, dbUserName, dbPassword);
 				pstmt = con.prepareStatement(sp_get_decision_case_notfinish);
+				pstmt.setString(1, groupId);
+				
 				rs = pstmt.executeQuery();
 				
 				while (rs.next()) {
