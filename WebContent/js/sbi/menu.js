@@ -44,6 +44,11 @@ $(function(){
 				var a = $('<a>')
 					.attr('href', j_item.url)
 					.text( j_item.menuName );
+
+				if (j_item.url.match("^http://")) {
+					a.attr("target", "_blank");
+				}
+				
 				var li = $("<li></li>")
 					.attr("menu_id", j_item.id)
 					.append( a );
@@ -55,7 +60,7 @@ $(function(){
 						.attr('href', k_item.url)
 						.text( k_item.menuName );
 					
-					if ((k_item.id >= 33 && k_item.id <= 52) || k_item.id == 76) {
+					if (k_item.url.match("^http://")) {
 						a.attr("target", "_blank");
 					}
 					
