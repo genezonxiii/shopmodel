@@ -36,6 +36,7 @@
 }
 </style>
 <script>
+var timer =0;
 	$(function(){
 		$("#message").dialog({
 			draggable : true, resizable : false, autoOpen : false,
@@ -61,7 +62,11 @@
 		});
 		
 		$('#form1').ajaxForm(function(result) {
+			clearTimeout(timer);
+			$("#submitbtn").removeAttr("disabled");
+			$("#submitbtn").removeClass("btn-gray");
 			var str = result;
+			console.log(result);
 			if(str!="fall"&& str.length>20){
 				draw_uploaddocs({
 					action :"sp_insert_upload_doc",
@@ -141,20 +146,31 @@
 	}
 	
 	function uploaddoc(){
+		
 		var errormsg="";
 		if($("#title").val()<1){errormsg+="<div style='text-align:center;'>請輸入標題<br>";}
 		if($("#summary").val()<1){errormsg+="請輸入概述<br>";}
 		if($("#file").val()<1){errormsg+="未選擇檔案<br></div>";}
-		var tmp = $("#file").val().replace('C:\\fakepath\\','');
+		if(document.getElementById("file").files.item(0)!=null && document.getElementById("file").files.item(0).size>50*1024*1024){
+			errormsg+="檔案大小超出上限!! 無法上傳。";
+		}
 		
+		var tmp = $("#file").val().replace('C:\\fakepath\\','');
 		$("#file").val(tmp);
 		if(errormsg.length>2){
 			$("#message").html(errormsg);
 			$("#message").dialog("open");
 			return false;
 		}
-		$("#form1").attr("action","uploaddoc.do?action=upload_doc&file_name="+$("#file").val().replace('C:\\fakepath\\',''));
 		
+		$("#submitbtn").attr("disabled","true");
+		$("#submitbtn").addClass("btn-gray");
+		$("#form1").attr("action","uploaddoc.do?action=upload_doc&file_name="+$("#file").val().replace('C:\\fakepath\\',''));
+		timer = setTimeout(function(){ 
+			$("#message").html("上傳逾時。");
+			$("#message").dialog("open");
+			timer=-1;
+		},30*1000);
 		return true;
 	}
 </script>
@@ -168,9 +184,10 @@
 				<table class='table1'>
 				<tr><td>標題:</td><td><input type='text' id='title' placeholder='請輸入標題' style="width:calc(60vw);"></td></tr>
 				<tr><td>概述:</td><td><textarea id='summary' placeholder='請輸入概述' style="width:calc(60vw);height:200px;"></textarea></td></tr>
-				<tr><td>檔案上傳:</td><td>
+				<tr><td>檔案上傳:<br><font style='color:red;'>(上限50MB)</font></td><td>
 					<div style='border:1px solid #ccc;padding:5px 10px;width:calc(60vw);'><input type="file" id="file" name="file" accept=".csv,.pdf,.xls,.xlsx" /></div><br>
 				</td></tr>
+				<tr><td></td><td></td></tr>
 				</table>
 				<input type="submit" id="submitbtn" onclick="return uploaddoc()" value="檔案上傳" class="btn btn-exec btn-wide" style="color: #fff;margin-left:20px"/>
 <!-- 				<span id="upload_msg" style="color:red;font-size:20px;margin-left:20px;line-height:40px;vertical-align:bottom;display:none;">資料傳輸中...請稍候!</span> -->
