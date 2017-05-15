@@ -118,19 +118,21 @@ public class UploadDocs extends HttpServlet {
 			String ret = "";
 			String _uid= UUID.randomUUID().toString();
 			String ori_name="";
+			File file_path = new File(getServletConfig().getServletContext().getInitParameter("uploadpath")+"/doc");
+			if(!file_path.exists()){
+				file_path.mkdirs();
+			}
 			String fullname = getServletConfig().getServletContext().getInitParameter("uploadpath")+"/doc/"+_uid;
-			int maxFileSize = 5000 * 1024;
-			int maxMemSize = 5000 * 1024;
+			int maxFileSize = 50 * 1024 * 1024;
+			int maxMemSize = 50 * 1024 * 1024;
 			String contentType = request.getContentType();
 			if (contentType!=null && (contentType.indexOf("multipart/form-data") >= 0)) {
-				
 			      DiskFileItemFactory factory = new DiskFileItemFactory();
 			      factory.setSizeThreshold(maxMemSize);
 			      String file_over=getServletConfig().getServletContext().getInitParameter("uploadpath")+"/fail";
 			      factory.setRepository(new File(file_over));
 			      ServletFileUpload upload = new ServletFileUpload(factory);
 			      upload.setSizeMax( maxFileSize );
-			      
 			      try{
 			         List fileItems = upload.parseRequest(request);
 			         Iterator i = fileItems.iterator();
@@ -149,11 +151,11 @@ public class UploadDocs extends HttpServlet {
 			            }
 			         }
 			      }catch(Exception ex) {
+			    	  ex.printStackTrace(System.err);
 			    	  ret="E_write_File:"+ex.toString();
 			    	  ret = "fall";
 			      }
 			   }else{
-				   ret="E_No one found.";
 				   ret = "fall";
 			   }
 			response.getWriter().write(ret);
