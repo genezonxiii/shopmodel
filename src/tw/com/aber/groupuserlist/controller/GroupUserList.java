@@ -173,7 +173,7 @@ public class GroupUserList extends HttpServlet {
 		private static final String sp_insert_user = "call sp_insert_user(?,?,?,?,?)";
 		private static final String sp_getUserByGroup = "call sp_getUserByGroup(?)";
 		private static final String sp_del_user = "call sp_del_user(?,?)";
-		private static final String sp_update_user = "call sp_update_user(?,?,?,?,?)";
+		private static final String sp_update_user = "call sp_update_user(?,?,?,?)";
 		private static final String sp_check_email = "call sp_check_email(?,?,?)";
 		private static final String sp_update_password = "call sp_update_password (?,?)";
 
@@ -235,8 +235,8 @@ public class GroupUserList extends HttpServlet {
 				pstmt.setString(1, userVO.getUser_id());
 				pstmt.setString(2, userVO.getGroup_id());
 				pstmt.setString(3, userVO.getUser_name());
-				pstmt.setString(4, userVO.getEmail());
-				pstmt.setString(5, userVO.getAdministrator());
+				//pstmt.setString(4, userVO.getEmail());
+				pstmt.setString(4, userVO.getAdministrator());
 
 				pstmt.executeUpdate();
 

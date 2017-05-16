@@ -92,11 +92,12 @@
 							var formId = "dialog-form-data-process";
 							var btnTxt_1 = "新增";
 							var btnTxt_2 = "取消";
-							var oWidth = 950;
+							var oWidth = 'auto';
 							var url = oUrl;
+							var mode = 'insert';
 							
 							//must be initialized to set dialog
-							initGroupDialog();
+							initGroupDialog(mode);
 							drawDialog(dialogId, url, oWidth, formId, btnTxt_1, btnTxt_2)
 								.data("group_id",$("#hiddenGrd").val())
 								.dialog("option","title","新增人員")
@@ -348,7 +349,7 @@
 
 			}
 			
-			function initGroupDialog(){
+			function initGroupDialog(mode){
 				
 				var user_name =  
 					"<td>&nbsp;人員名稱&nbsp;</td>" + 
@@ -362,7 +363,7 @@
 						"<select name='dialog_role'>" +
 						"<option value= 'default'>請選擇</option>" +
 						"<option value='1'>管理者</option>" +
-						"<option value='2'>使用者</option>" +
+						"<option value='0'>使用者</option>" +
 						"</select>"
 					"</td>";
 					
@@ -383,8 +384,11 @@
 				var form = document.getElementById("dialog-form-data-process");
 				
 				$(dialog).find('tr').remove();
-				$(dialog).append($('<tr></tr>').val('').html(email + user_name));
-				$(dialog).append($('<tr></tr>').val('').html(password + role));
+				$(dialog).append($('<tr></tr>').val('').html( user_name + role ));
+				
+				if(mode == 'insert'){
+					$(dialog).append($('<tr></tr>').val('').html( email + password));
+				}
 				
 				//validate start
 				$.extend(jQuery.validator.messages, {
@@ -419,25 +423,44 @@
 					
 				}, "此電子信箱已註冊");
 				
-				$(form).validate({
-				  	rules:{
-				  		dialog_user_name :{
-						  	required: true
-				  		},
-				  		dialog_role:{
-						  	required: true,
-						  	valueNotEquals : "default"
-				  		},
-				  		dialog_email:{
-						  	required: true,
-						  	email: true,
-						  	isEmailExist : true
-				  		},
-				  		dialog_password:{
-						  	required: true
-				  		}
-				  	}
-				});
+				console.log("mode == 'update'"+(mode == 'update'));
+				console.log("mode == 'insert'"+(mode == 'insert'));
+				
+				if(mode == 'update'){
+					$(form).validate({
+					  	rules:{
+					  		dialog_user_name :{
+							  	required: true
+					  		},
+					  		dialog_role:{
+							  	required: true,
+							  	valueNotEquals : "default"
+					  		}
+					  	}
+					});
+				}
+				
+				if(mode == 'insert'){
+					$(form).validate({
+					  	rules:{
+					  		dialog_user_name :{
+							  	required: true
+					  		},
+					  		dialog_password:{
+							  	required: true
+					  		},
+					  		dialog_role:{
+							  	required: true,
+							  	valueNotEquals : "default"
+					  		},
+					  		dialog_email:{
+							  	//required: true,
+							  	email: true,
+							  	isEmailExist : true
+					  		}
+					  	}
+					});
+				}
 			}
 			
 		
@@ -535,22 +558,23 @@
 				var formId = "dialog-form-data-process";
 				var btnTxt_1 = "修改";
 				var btnTxt_2 = "取消";
-				var oWidth = 950;
+				var oWidth = 'auto';
 				var url = oUrl;
+				var mode = 'update';
 				
 				//must be initialized
-				initGroupDialog();
+				initGroupDialog(mode);
 				
-				$(dialog).find("input[name='dialog_password']").attr("placeholder","如不需修改，則不用輸入");
+				//$(dialog).find("input[name='dialog_password']").attr("placeholder","如不需修改，則不用輸入");
 				$(dialog).find("input[name='dialog_email']").val(data.email);
-				$(dialog).find("input[name='dialog_email']").attr('disabled', true);
+				//$(dialog).find("input[name='dialog_email']").attr('disabled', true);
 				$(dialog).find("input[name='dialog_user_name']").val(data.user_name);
 				
 				drawDialog
 					(dialogId, url, oWidth, formId, btnTxt_1, btnTxt_2)
 					.data("user_id",user_id)
 					.data("group_id",$("#hiddenGrd").val())	
-					.data("password",data.password)
+					//.data("password",data.password)
 					.dialog("option","title","修改資料")
 					.dialog("open");
 			});
