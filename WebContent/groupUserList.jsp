@@ -399,30 +399,6 @@
 					return arg != value;
 				}, "請選擇");
 				
-				$.validator.addMethod("isEmailExist", function(value, element, arg){
-					var isExist = false;
-
-					var oData = {
-							"action": "isEmailExist",
-							"group_id": $("#hiddenGrd").val(),
-							"email": value
-					};
-					
-					$.ajax({
-					    url : oUrl,
-					    type : "POST",
-			            async: false, 
-					    cache : false,
-					    delay : 0,
-					    data : oData,
-					    success: function(data) {
-					    	isExist = (data == "true");
-					    }
-					});
-					return arg != isExist;
-					
-				}, "此電子信箱已註冊");
-				
 				console.log("mode == 'update'"+(mode == 'update'));
 				console.log("mode == 'insert'"+(mode == 'insert'));
 				
@@ -454,9 +430,7 @@
 							  	valueNotEquals : "default"
 					  		},
 					  		dialog_email:{
-							  	//required: true,
-							  	email: true,
-							  	isEmailExist : true
+							  	email: true
 					  		}
 					  	}
 					});
