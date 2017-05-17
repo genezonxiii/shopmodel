@@ -49,7 +49,7 @@
 					cache : false,
 					data : {
 						action : "login",
-						group_id : $("select[name='group_name']").val(),
+						group_name : $("#group_name").val(),
 	                	user_name : $("#user_name").val(),
 						pswd : $("#pswd").val(),
 						validateCode : $("#validateCode").val()
@@ -85,24 +85,6 @@
 		$(function() {
 			$("#validateCodeImg").click(function() {
 				changeImg();
-			});
-			
-			$.ajax({
-				type : "POST",
-				url : "Group.do",
-				data : {
-					action : "getGroupAll"
-				},
-				success : function(result) {
-					var json_obj = $.parseJSON(result);
-									
-					$.each(json_obj, function(i, item) {
-						$("[name^=group_name]").append($('<option></option>').val(json_obj[i].group_id).html(json_obj[i].group_name));	
-					});
-				},
-				error:function(e){
-// 					console.log('btn1 click error');
-				}
 			});
 	
 			$("#user_name").focus();
@@ -179,7 +161,7 @@
 			<form id="login-form-post">
 				<label for="uninumber">
 					<span class="block-label">公司</span>
-					<select id="group_name" name="group_name"></select>
+					<input type="text" id="group_name" name="group_name"></select>
 <!-- 					<span class="error-msg">XXXXXXXX</span> -->
 				</label>
 				<label for="username">
