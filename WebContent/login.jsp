@@ -99,7 +99,7 @@
 	                delay : 1500,
 	                data : {
 	                	action : "check_user_exist",
-	                	group_id : $("select[name='group_name']").val(),
+	                	group_name : $("input[name='group_name']").val(),
 	                	user_name : $("input[name='user_name']").val()
 	                },
 	                success: function(data) {
