@@ -87,7 +87,7 @@
 				changeImg();
 			});
 	
-			$("#user_name").focus();
+			$("#group_name").focus();
 			$("#user_name").blur(function(){
 		    	$(".error").removeClass("error");
 		    	$(".error-msg").remove();
