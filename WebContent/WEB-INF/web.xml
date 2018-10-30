@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
-  <display-name>SBI</display-name>
+  <display-name>ShopModel</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
@@ -21,10 +21,7 @@
   </context-param>
   <context-param>
     <param-name>dbURL</param-name>
-<!--     <param-value>jdbc:mysql://10.0.0.4/sbi</param-value> -->
-<!--     <param-value>jdbc:mysql://localhost:3306/sbi</param-value> -->
-<!--     <param-value>jdbc:mysql://localhost:3306/cdri</param-value> -->
-    <param-value>jdbc:mysql://192.168.112.164:3306/cdri</param-value>
+     <param-value>jdbc:mysql://localhost:3306/sbi</param-value>
   </context-param>
   <context-param>
     <param-name>dbUserName</param-name>
@@ -32,23 +29,19 @@
   </context-param>
   <context-param>
     <param-name>dbPassword</param-name>
-<!--     <param-value>Admin@csi1008!</param-value> -->
-    <param-value>admin123</param-value>
+    <param-value>mysql</param-value> 
   </context-param>
   <context-param>
     <param-name>uploadpath</param-name>
     <param-value>/data/sbiupload</param-value>
-<!--     <param-value>D:/data/sbiupload</param-value> -->
   </context-param>
   <context-param>
     <param-name>photopath</param-name>
     <param-value>/data/cdriproductpic</param-value>
-<!--     <param-value>D:/data/cdriproductpic</param-value> -->
   </context-param>
   <context-param>
     <param-name>qrcodephotopath</param-name>
     <param-value>/data/cdriqrcode</param-value>
-<!--     <param-value>D:/data/cdriqrcode</param-value> -->
   </context-param>
   <context-param>
     <param-name>ebookpath</param-name>
@@ -56,9 +49,7 @@
   </context-param>
   <context-param>
     <param-name>pythonwebservice</param-name>
-<!--     <param-value>http://61.218.8.55:8099</param-value> -->
-<!--     <param-value>http://localhost:8099</param-value> -->
-    <param-value>http://192.168.112.164:8070</param-value>
+    <param-value>http://localhost:8099</param-value>
   </context-param>
   <context-param>
     <param-name>pythonNewsWebservice</param-name>
@@ -75,12 +66,10 @@
   </context-param>
   <context-param>
     <param-name>mongodb</param-name>
-<!-- 	<param-value>db_news</param-value> -->
     <param-value>db_product4</param-value>
   </context-param>
   <context-param>
     <param-name>mongocollection</param-name>
-<!-- 	<param-value>co_news</param-value> -->
     <param-value>co_eatapple</param-value>
   </context-param>
   <context-param>

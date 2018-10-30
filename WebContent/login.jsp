@@ -161,17 +161,17 @@
 			<form id="login-form-post">
 				<label for="uninumber">
 					<span class="block-label">公司</span>
-					<input type="text" id="group_name" name="group_name"></select>
+					<input type="text" id="group_name" name="group_name" value=""></select>
 <!-- 					<span class="error-msg">XXXXXXXX</span> -->
 				</label>
 				<label for="username">
 					<span class="block-label">帳號</span>
-					<input type="text" id="user_name" name="user_name">
+					<input type="text" id="user_name" name="user_name" value="">
 					<!-- <span class="error-msg">長度不能超過10個字</span> -->
 				</label>
 				<label for="pswd">
 					<span class="block-label">密碼</span>
-					<input type="password" id="pswd" name="pswd">
+					<input type="password" id="pswd" name="pswd" value="">
 					<!-- <span class="error-msg">長度不能超過10個字</span> -->
 				</label>
 				<div class="verify-wrap">

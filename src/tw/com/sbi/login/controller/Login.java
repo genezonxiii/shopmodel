@@ -306,7 +306,7 @@ public class Login extends HttpServlet {
 	/*************************** 操作資料庫 ****************************************/
 	class loginDAO implements login_interface {
 		// 會使用到的Stored procedure
-		private static final String sp_login = "call sp_login_test(?,?,?)";
+		private static final String sp_login = "call sp_login(?,?,?)";
 		private static final String sp_checkuser = "call sp_checkuser_test(?,?,?)";
 		private static final String sp_get_main_menu = "call sp_get_main_menu()";
 		private static final String sp_get_submenu_by_parent_id = "call sp_get_submenu_by_parent_id(?)";
